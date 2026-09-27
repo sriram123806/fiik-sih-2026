@@ -1,0 +1,45 @@
+.fiik-sidebar {
+  width: var(--sidebar-w);
+  flex-shrink: 0;
+  background: #fff;
+  border-right: 1px solid var(--border);
+  padding: 20px 12px;
+  display: flex;
+  flex-direction: column;
+}
+.sidebar-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--gray-500);
+  padding: 0 12px 10px;
+}
+.sidebar-title.small { font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; }
+.sidebar-nav { display: flex; flex-direction: column; gap: 2px; }
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13.5px;
+  font-weight: 500;
+  padding: 9px 12px;
+  border-radius: var(--radius-sm);
+  color: var(--gray-600);
+}
+.nav-item.disabled { color: var(--gray-400); cursor: not-allowed; }
+.nav-item.active {
+  background: var(--orange-tint);
+  color: var(--orange-dark);
+  font-weight: 700;
+  position: relative;
+}
+.nav-item.active::before {
+  content: '';
+  position: absolute;
+  left: -12px; top: 6px; bottom: 6px;
+  width: 3px;
+  border-radius: 0 3px 3px 0;
+  background: var(--orange);
+}
+.nav-item.module { color: var(--navy); }
+.nav-item.module:hover { background: var(--gray-50); }
+.sidebar-divider { height: 1px; background: var(--border); margin: 14px 4px; }

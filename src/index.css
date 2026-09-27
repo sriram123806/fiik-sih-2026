@@ -1,0 +1,227 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --fiik-orange: #f26a21;
+  --fiik-orange-dark: #d95209;
+  --fiik-orange-tint: #fff4ee;
+  --fiik-green: #16a34a;
+  --fiik-green-tint: #f0fdf4;
+  --fiik-blue: #1e40af;
+  --fiik-blue-tint: #eff6ff;
+  --fiik-navy: #0b132b;
+  --fiik-red: #dc2626;
+  --fiik-ink: #101828;
+  --fiik-ink-soft: #64748b;
+  --fiik-border: #e2e8f0;
+  --fiik-white: #ffffff;
+  --fiik-radius: 12px;
+
+  /* Governance module vars */
+  --navy: #0b132b;
+  --orange: #f26a21;
+  --green: #16a34a;
+  --gray-100: #f8fafc;
+  --gray-200: #e2e8f0;
+  --gray-300: #cbd5e1;
+  --gray-500: #64748b;
+  --gray-700: #334155;
+  --gray-900: #0f172a;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  background-color: #f8fafc;
+  color: var(--fiik-ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+.tricolor-bar {
+  height: 3px;
+  background: linear-gradient(90deg, #FF9933 0%, #FFFFFF 50%, #138808 100%);
+}
+
+.gov-header-top {
+  background-color: #0b132b;
+}
+
+/* Custom focus ring */
+.focus-ring:focus-visible {
+  outline: 2px solid var(--fiik-orange);
+  outline-offset: 2px;
+}
+
+/* Common Card & Button styles */
+.card {
+  background: #ffffff;
+  border: 1px solid var(--fiik-border);
+  border-radius: var(--fiik-radius);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 10px 18px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  text-decoration: none;
+}
+
+.btn-primary {
+  background: var(--fiik-orange);
+  color: #ffffff;
+}
+.btn-primary:hover {
+  background: var(--fiik-orange-dark);
+}
+
+.btn-secondary {
+  background: #ffffff;
+  border-color: var(--fiik-border);
+  color: var(--navy);
+}
+.btn-secondary:hover {
+  background: #f8fafc;
+  border-color: var(--gray-300);
+}
+
+.btn-outline {
+  background: transparent;
+  border-color: var(--fiik-border);
+  color: var(--fiik-ink);
+}
+.btn-outline:hover {
+  background: #f1f5f9;
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--fiik-orange-dark);
+}
+.btn-ghost:hover {
+  background: var(--fiik-orange-tint);
+}
+
+.btn-sm {
+  padding: 6px 12px;
+  font-size: 13px;
+}
+
+/* Workflow Step Progress Bar */
+.step-progress-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  margin: 20px 0 30px;
+}
+
+.step-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 1;
+  position: relative;
+  flex: 1;
+}
+
+.step-circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 2px solid var(--fiik-border);
+  color: var(--fiik-ink-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 13px;
+  transition: all 0.2s;
+}
+
+.step-item.active .step-circle {
+  border-color: var(--fiik-orange);
+  background: var(--fiik-orange);
+  color: #ffffff;
+}
+
+.step-item.completed .step-circle {
+  border-color: var(--fiik-green);
+  background: var(--fiik-green);
+  color: #ffffff;
+}
+
+.step-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--fiik-ink-soft);
+  margin-top: 8px;
+  text-align: center;
+}
+
+.step-item.active .step-label {
+  color: var(--fiik-orange-dark);
+}
+
+.step-item.completed .step-label {
+  color: var(--fiik-ink);
+}
+
+/* Four-party review sequence horizontal cards */
+.fp-sequence {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.fp-card {
+  background: #ffffff;
+  border: 1px solid var(--fiik-border);
+  border-radius: 12px;
+  padding: 16px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.fp-card-badge {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--navy);
+  color: #fff;
+  font-weight: 700;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fp-card-title {
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--navy);
+}
+
+.fp-card-reviewer {
+  font-size: 12px;
+  color: var(--fiik-ink-soft);
+}
+
+@media (max-width: 768px) {
+  .fp-sequence {
+    grid-template-columns: 1fr;
+  }
+}
