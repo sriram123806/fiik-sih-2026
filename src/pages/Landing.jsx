@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import { stakeholders, pillars, howItWorks } from '../data/mockData';
+import heroImg from '../assets/india-govt-hero.png';
 
 const stakeholderIcons = {
   startups: '🚀',
@@ -106,7 +107,7 @@ export default function Landing() {
           <div className="lg:col-span-5 relative">
             <div className="relative rounded-2xl overflow-hidden border-4 border-white shadow-2xl bg-white group">
               <img
-                src="/india-govt-hero.png"
+                src={heroImg}
                 alt="Government of India Architectural Illustration"
                 className="w-full h-auto object-cover transform group-hover:scale-105 transition-transform duration-700"
               />
