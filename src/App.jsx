@@ -7,6 +7,7 @@ import RoleGuard from './components/RoleGuard';
 import Landing from './pages/Landing';
 import Login from './pages/Login';
 import RoleSelection from './pages/RoleSelection';
+import RoleVerification from './pages/RoleVerification';
 import StartupDashboard from './pages/StartupDashboard';
 import StartupRegistration from './pages/StartupRegistration';
 import WorkOrderBuilder from './pages/WorkOrderBuilder';
@@ -17,6 +18,7 @@ import FieldEvaluation from './pages/FieldEvaluation';
 import ApprovalPayment from './pages/ApprovalPayment';
 import PrepGeneration from './pages/PrepGeneration';
 import CompletedPilot from './pages/CompletedPilot';
+import FiikChatbot from './components/FiikChatbot';
 
 export default function App() {
   return (
@@ -29,9 +31,10 @@ export default function App() {
           {/* Workflow Step 02: Login */}
           <Route path="/login" element={<Login />} />
 
-          {/* Workflow Step 03: Role Selection */}
+          {/* Workflow Step 03: Role Selection & Verification Gate */}
           <Route path="/role-selection" element={<RoleSelection />} />
           <Route path="/select-role" element={<RoleSelection />} />
+          <Route path="/verify-role" element={<RoleVerification />} />
 
           {/* Workflow Step 04: Role Dashboard (Adapts dynamically to Startup, Dept, Evaluator, MSInS Admin) */}
           <Route
@@ -224,6 +227,7 @@ export default function App() {
           {/* Wildcard Fallback */}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
+        <FiikChatbot />
       </PilotProvider>
     </AuthProvider>
   );

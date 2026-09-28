@@ -17,7 +17,7 @@ export default function RoleSelection() {
 
   function handleSelect(roleKey) {
     chooseRole(roleKey);
-    navigate('/dashboard');
+    navigate('/verify-role');
   }
 
   return (

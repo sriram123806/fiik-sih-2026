@@ -41,23 +41,34 @@ export default function Sidebar() {
       </div>
       <nav className="py-2 flex-1">
         <ul className="space-y-0.5">
-          {navItems.map((item) => (
+          {navItems.map((item, idx) => (
             <li key={item.key}>
               <NavLink
                 to={item.path}
                 end={item.key === 'home'}
                 className={({ isActive }) =>
-                  `flex items-center gap-3 px-5 py-2.5 text-xs font-medium border-l-[3px] transition-all ${
+                  `flex items-center justify-between px-5 py-2.5 text-xs font-medium border-l-[3px] transition-all ${
                     isActive
                       ? 'border-fiik-orange bg-orange-50 text-fiik-orangeDark font-bold'
                       : 'border-transparent text-gray-600 hover:bg-gray-50 hover:text-navy-950'
                   }`
                 }
               >
-                <span aria-hidden="true" className="text-base leading-none">
-                  {icons[item.key] || '📄'}
-                </span>
-                <span>{item.label}</span>
+                <div className="flex items-center gap-2.5">
+                  <span aria-hidden="true" className="text-base leading-none">
+                    {icons[item.key] || '📄'}
+                  </span>
+                  <span>{item.label}</span>
+                </div>
+                {item.key === 'home' ? (
+                  <span className="text-[10px] font-bold text-green-700 bg-green-50 px-1.5 py-0.5 rounded border border-green-200">✓ Active</span>
+                ) : idx <= 3 ? (
+                  <span className="text-[10px] font-bold text-green-700 bg-green-50 px-1.5 py-0.5 rounded border border-green-200">✓ Done</span>
+                ) : idx === 4 ? (
+                  <span className="text-[10px] font-bold text-orange-700 bg-orange-50 px-1.5 py-0.5 rounded border border-orange-200">→ Active</span>
+                ) : (
+                  <span className="text-[10px] font-semibold text-gray-500 bg-gray-100 px-1.5 py-0.5 rounded border border-gray-200">Stage {idx}</span>
+                )}
               </NavLink>
             </li>
           ))}

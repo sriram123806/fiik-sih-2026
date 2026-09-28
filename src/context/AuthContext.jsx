@@ -52,14 +52,24 @@ export function AuthProvider({ children }) {
     }
   });
 
+  const [verifiedRoles, setVerifiedRoles] = useState(() => {
+    try {
+      const storedVerified = localStorage.getItem('fiik_verified_roles');
+      return storedVerified ? JSON.parse(storedVerified) : { startup: true, department: true, evaluator: true, admin: true };
+    } catch (e) {
+      return { startup: true, department: true, evaluator: true, admin: true };
+    }
+  });
+
   useEffect(() => {
     try {
       localStorage.setItem('fiik_role', role);
       localStorage.setItem('fiik_auth', isAuthenticated ? 'true' : 'false');
+      localStorage.setItem('fiik_verified_roles', JSON.stringify(verifiedRoles));
     } catch (e) {
       // ignore
     }
-  }, [role, isAuthenticated]);
+  }, [role, isAuthenticated, verifiedRoles]);
 
   const login = (roleType = 'startup') => {
     const validRole = USER_PROFILES[roleType] ? roleType : 'startup';
@@ -92,6 +102,20 @@ export function AuthProvider({ children }) {
     }
   };
 
+  const verifyRole = (roleType, details = {}) => {
+    setVerifiedRoles((prev) => {
+      const updated = { ...prev, [roleType]: true };
+      try {
+        localStorage.setItem('fiik_verified_roles', JSON.stringify(updated));
+      } catch (e) {}
+      return updated;
+    });
+  };
+
+  const isRoleVerified = (roleType = role) => {
+    return !!verifiedRoles[roleType];
+  };
+
   const currentUser = USER_PROFILES[role] || USER_PROFILES.startup;
 
   return (
@@ -103,6 +127,9 @@ export function AuthProvider({ children }) {
         login,
         logout,
         chooseRole,
+        verifiedRoles,
+        verifyRole,
+        isRoleVerified,
       }}
     >
       {children}

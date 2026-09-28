@@ -50,68 +50,46 @@ export default function StartupDashboard() {
               </p>
             </div>
 
-            {/* Role-Specific Action Buttons */}
-            <div className="flex flex-wrap gap-2">
+            {/* Single Current Next Action Button */}
+            <div className="flex flex-wrap gap-2 items-center">
+              <span className="text-[10px] font-extrabold uppercase tracking-widest text-navy-950 bg-gray-100 border border-gray-200 px-2.5 py-1 rounded">
+                CURRENT NEXT ACTION:
+              </span>
               {activeRole === 'startup' && (
-                <>
-                  <Link
-                    to="/registration"
-                    className="bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 text-xs font-semibold px-3 py-2 rounded-md shadow-sm"
-                  >
-                    Startup Registration Profile
-                  </Link>
-                  <Link
-                    to="/work-order"
-                    className="bg-navy-950 text-white hover:bg-black text-xs font-semibold px-3 py-2 rounded-md shadow-sm"
-                  >
-                    Propose Pilot Request →
-                  </Link>
-                </>
+                <Link
+                  to="/evidence-submission"
+                  className="bg-fiik-orange hover:bg-fiik-orangeDark text-white text-xs font-bold px-4 py-2.5 rounded-lg shadow transition-all focus-ring flex items-center gap-1.5"
+                >
+                  <span>Submit Milestone 2 Evidence</span>
+                  <span>→</span>
+                </Link>
               )}
-
               {activeRole === 'department' && (
-                <>
-                  <Link
-                    to="/work-order"
-                    className="bg-fiik-orange text-white hover:bg-fiik-orangeDark text-xs font-semibold px-3 py-2 rounded-md shadow-sm"
-                  >
-                    Review Startup Proposals →
-                  </Link>
-                  <Link
-                    to="/four-party-review"
-                    className="bg-navy-950 text-white hover:bg-black text-xs font-semibold px-3 py-2 rounded-md shadow-sm"
-                  >
-                    Four-Party Governance
-                  </Link>
-                </>
+                <Link
+                  to="/field-evaluation"
+                  className="bg-navy-950 hover:bg-black text-white text-xs font-bold px-4 py-2.5 rounded-lg shadow transition-all focus-ring flex items-center gap-1.5"
+                >
+                  <span>Review Milestone 2 Sign-Off</span>
+                  <span>→</span>
+                </Link>
               )}
-
               {activeRole === 'evaluator' && (
-                <>
-                  <Link
-                    to="/field-evaluation"
-                    className="bg-fiik-green text-white hover:bg-green-700 text-xs font-semibold px-3 py-2 rounded-md shadow-sm"
-                  >
-                    Perform Field Visit &amp; Evidence Audit →
-                  </Link>
-                </>
+                <Link
+                  to="/field-evaluation"
+                  className="bg-fiik-green hover:bg-green-700 text-white text-xs font-bold px-4 py-2.5 rounded-lg shadow transition-all focus-ring flex items-center gap-1.5"
+                >
+                  <span>Perform Technical Field Audit</span>
+                  <span>→</span>
+                </Link>
               )}
-
               {activeRole === 'admin' && (
-                <>
-                  <Link
-                    to="/registration"
-                    className="bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 text-xs font-semibold px-3 py-2 rounded-md shadow-sm"
-                  >
-                    Verify Startups
-                  </Link>
-                  <Link
-                    to="/work-order"
-                    className="bg-fiik-orange text-white hover:bg-fiik-orangeDark text-xs font-semibold px-3 py-2 rounded-md shadow-sm"
-                  >
-                    Create &amp; Issue Official Work Order →
-                  </Link>
-                </>
+                <Link
+                  to="/work-order"
+                  className="bg-purple-800 hover:bg-purple-900 text-white text-xs font-bold px-4 py-2.5 rounded-lg shadow transition-all focus-ring flex items-center gap-1.5"
+                >
+                  <span>Publish Official Work Order</span>
+                  <span>→</span>
+                </Link>
               )}
             </div>
           </div>

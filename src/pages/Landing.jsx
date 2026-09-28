@@ -43,7 +43,7 @@ export default function Landing() {
               <span className="h-2 w-2 rounded-full bg-fiik-orange animate-pulse" />
               <span>GOVERNMENT OF INDIA INNOVATION INITIATIVE</span>
               <span className="text-orange-400">|</span>
-              <span className="text-navy-950 font-extrabold">SIH26136</span>
+              <span className="text-navy-950 font-extrabold">NATIONAL PILOT FRAMEWORK</span>
             </div>
 
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-navy-950 tracking-tight leading-[1.15]">
@@ -77,12 +77,6 @@ export default function Landing() {
                 className="bg-white border-2 border-navy-950 text-navy-950 hover:bg-navy-950 hover:text-white font-bold px-6 py-3 rounded-lg transition-all focus-ring text-sm sm:text-base"
               >
                 How It Works
-              </a>
-              <a
-                href="#about"
-                className="text-xs font-bold text-gray-600 hover:text-navy-950 underline px-2 py-1"
-              >
-                SIH Problem Statement
               </a>
             </div>
 
@@ -164,7 +158,7 @@ export default function Landing() {
                   </span>
                   <div>
                     <span className="text-xs font-black uppercase tracking-wider text-fiik-orangeDark bg-orange-100 px-2.5 py-0.5 rounded-full">
-                      SIH26136 · Selected Problem Statement
+                      NATIONAL GOVERNANCE MANDATE
                     </span>
                     <h3 className="text-base font-extrabold text-navy-950 mt-1">
                       Pilot Mechanism for Government &amp; Startups
@@ -172,7 +166,7 @@ export default function Landing() {
                   </div>
                 </div>
                 <p className="text-sm text-gray-800 font-medium leading-relaxed italic bg-white/80 p-4 rounded-xl border border-orange-100">
-                  &ldquo;To design and develop a mechanism for government departments to pilot innovative
+                  &ldquo;A standardized mechanism for government departments to pilot innovative
                   solutions with startups, evaluate their performance, and enable faster procurement
                   of proven solutions.&rdquo;
                 </p>
@@ -349,7 +343,7 @@ export default function Landing() {
             <p className="text-gray-400 leading-relaxed">
               Pilot Intelligence Procurement Mechanism for Government &amp; Startups.
             </p>
-            <p className="text-orange-400 font-bold mt-2">SIH26136 Selected Problem Solution</p>
+            <p className="text-orange-400 font-bold mt-2">National Innovation Procurement Initiative</p>
           </div>
 
           <div>
@@ -381,7 +375,7 @@ export default function Landing() {
         </div>
 
         <div className="max-w-7xl mx-auto px-4 py-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-gray-400">
-          <p>© 2026 FIIK Mechanism · Government of India / SIH26136 Prototype</p>
+          <p>© 2026 FIIK Mechanism · Government of India Pilot Intelligence Portal</p>
           <div className="flex gap-4">
             <span className="hover:text-white cursor-pointer">Privacy Policy</span>
             <span>|</span>
