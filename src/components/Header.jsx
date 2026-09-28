@@ -17,19 +17,20 @@ export default function Header({ variant = 'public', showHomeLink = false, backT
     <header className="sticky top-0 z-40 bg-white shadow-sm font-sans">
 
       {/* ── Top Dark Navy Government Bar ── */}
-      <div className="bg-[#0B192C] text-white text-xs py-1.5 px-4 border-b border-navy-900">
+      <div className="bg-[#071A3D] text-white text-xs py-1.5 px-4 border-b border-navy-900">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3 font-semibold text-[11px] opacity-95">
             <span>GOVERNMENT OF INDIA</span>
             <span className="text-white/40">|</span>
             <span className="hidden sm:inline text-white/90">MINISTRY OF COMMERCE AND INDUSTRY</span>
           </div>
+          
           <div className="flex items-center gap-4 text-[11px] font-semibold">
             {variant === 'dashboard' ? (
               <>
                 <button className="flex items-center gap-1 hover:text-orange-300 transition-colors cursor-pointer">
                   <span>❓</span>
-                  <span className="hidden sm:inline">Help</span>
+                  <span className="hidden sm:inline">Helpdesk</span>
                 </button>
                 <button className="relative hover:text-orange-300 transition-colors cursor-pointer">
                   <span>🔔</span>
@@ -38,21 +39,22 @@ export default function Header({ variant = 'public', showHomeLink = false, backT
                     style={{ backgroundColor: theme.accent }}
                   />
                 </button>
-                {/* Role pill — accent-colored to reinforce portal identity */}
+                
+                {/* Role Pill in Top Bar */}
                 <div
-                  className="flex items-center gap-2 px-2.5 py-1 rounded-full border"
+                  className="flex items-center gap-2 px-3 py-1 rounded-full border shadow-xs"
                   style={{
                     backgroundColor: theme.accentLight,
                     borderColor: theme.accentBorder,
                   }}
                 >
                   <span
-                    className="h-5 w-5 rounded-full text-white flex items-center justify-center text-[10px] font-black"
+                    className="h-5 w-5 rounded-full text-white flex items-center justify-center text-[10px] font-black shadow-xs"
                     style={{ backgroundColor: theme.accent }}
                   >
                     {theme.initial}
                   </span>
-                  <span className="font-bold text-[11px]" style={{ color: theme.accentText }}>
+                  <span className="font-extrabold text-[11px]" style={{ color: theme.accentText }}>
                     {theme.roleLabel}
                   </span>
                 </div>
@@ -77,27 +79,29 @@ export default function Header({ variant = 'public', showHomeLink = false, backT
       {/* ── Main White Branding Header ── */}
       <div className="bg-white border-b border-gray-200/90 py-3 px-4">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
+          
+          {/* Left Branding */}
           <div className="flex items-center gap-4 min-w-0">
             {backTo && (
               <button
                 onClick={() => navigate(backTo)}
-                className="text-xs font-bold text-navy-950 hover:text-fiik-orange flex items-center gap-1 mr-2 cursor-pointer"
+                className="text-xs font-bold text-navy-950 hover:text-[#F36C21] flex items-center gap-1 mr-2 cursor-pointer"
               >
                 ← Back
               </button>
             )}
             <Link to="/" className="flex items-center gap-3.5 min-w-0">
-              <span className="text-fiik-orange font-black text-base tracking-tight whitespace-nowrap">#startupindia</span>
+              <span className="text-[#F36C21] font-black text-base tracking-tight whitespace-nowrap">#startupindia</span>
               <span className="hidden md:inline text-[10px] text-gray-500 font-semibold leading-tight">
                 75<br />Azadi ka<br />Amrit Mahotsav
               </span>
               <span className="h-9 w-px bg-gray-200 hidden sm:block" />
               <div className="flex items-center gap-2.5 min-w-0">
-                <span className="h-9 w-9 rounded-md bg-navy-950 text-white flex items-center justify-center font-black text-lg shrink-0 shadow-sm">
+                <span className="h-9 w-9 rounded-md bg-[#071A3D] text-white flex items-center justify-center font-black text-lg shrink-0 shadow-sm">
                   F
                 </span>
                 <div className="min-w-0">
-                  <span className="block font-black text-navy-950 text-xl leading-none tracking-tight">FIIK</span>
+                  <span className="block font-black text-[#071A3D] text-xl leading-none tracking-tight">FIIK</span>
                   <span className="block text-[10px] font-bold text-gray-500 tracking-wide truncate">
                     Pilot Intelligence Procurement Mechanism
                   </span>
@@ -106,53 +110,56 @@ export default function Header({ variant = 'public', showHomeLink = false, backT
             </Link>
           </div>
 
-          {/* Right side */}
-          <div className="flex items-center gap-3">
+          {/* Right Navigation & Actions */}
+          <div className="flex items-center gap-5">
+            {/* Top Navigation Links on Landing Page (Clean, NO duplicate "Explore Platform" button) */}
             {variant === 'public' && !showHomeLink && (
               <nav className="hidden lg:flex items-center gap-6 text-xs font-extrabold text-gray-700">
-                <a href="#about" className="hover:text-fiik-orange transition-colors">About</a>
-                <a href="#how-it-works" className="hover:text-fiik-orange transition-colors">How It Works</a>
-                <a href="#features" className="hover:text-fiik-orange transition-colors">Features</a>
+                <a href="#about" className="hover:text-[#F36C21] transition-colors">About</a>
+                <a href="#how-it-works" className="hover:text-[#F36C21] transition-colors">How It Works</a>
+                <a href="#features" className="hover:text-[#F36C21] transition-colors">Features</a>
+                <a href="#contact" className="hover:text-[#F36C21] transition-colors">Contact</a>
+                <Link to="/login" className="text-[#071A3D] hover:text-[#F36C21] transition-colors font-black ml-2 border-l border-gray-300 pl-4">
+                  Portal Login →
+                </Link>
               </nav>
             )}
 
             {showHomeLink && (
-              <Link to="/" className="text-xs font-bold text-navy-950 hover:text-fiik-orange transition-colors flex items-center gap-1">
-                ← Home
-              </Link>
-            )}
-            {variant === 'public' && !showHomeLink && (
-              <Link
-                to="/login"
-                className="bg-fiik-orange hover:bg-fiik-orangeDark text-white text-xs font-bold px-5 py-2.5 rounded-lg transition-all shadow-sm focus-ring flex items-center gap-1.5"
-              >
-                <span>Explore Platform</span>
-                <span>→</span>
+              <Link to="/" className="text-xs font-bold text-[#071A3D] hover:text-[#F36C21] transition-colors flex items-center gap-1">
+                ← Homepage
               </Link>
             )}
 
+            {/* Dashboard Mode: Switch Role & Home */}
             {variant === 'dashboard' && (
               <div className="flex items-center gap-3 text-xs">
-                {/* Demo: role switcher */}
                 <div className="flex items-center gap-2 border-r border-gray-200 pr-3">
-                  <span className="text-gray-400 font-bold text-[11px]">Switch Role:</span>
+                  <span className="text-gray-400 font-bold text-[11px]">Switch Portal:</span>
                   <select
                     value={role}
                     onChange={(e) => handleRoleChange(e.target.value)}
-                    className="text-xs font-bold text-navy-950 bg-gray-50 border border-gray-200 rounded-md px-2.5 py-1 focus-ring cursor-pointer"
+                    className="text-xs font-bold text-[#071A3D] rounded-lg px-2.5 py-1.5 focus-ring cursor-pointer border shadow-xs"
+                    style={{
+                      backgroundColor: theme.accentLight,
+                      borderColor: theme.accentBorder,
+                      color: theme.accentText,
+                    }}
                   >
-                    <option value="startup">🚀 Startup</option>
-                    <option value="department">🏛️ Govt Dept</option>
-                    <option value="evaluator">👥 Evaluator</option>
-                    <option value="admin">🛡️ MSInS</option>
+                    <option value="startup">🚀 Startup Innovator (Blue)</option>
+                    <option value="department">🏛️ Govt Department (Orange)</option>
+                    <option value="evaluator">👥 Technical Evaluator (Green)</option>
+                    <option value="admin">🛡️ MSInS Authority (Purple)</option>
                   </select>
                 </div>
-                <Link to="/" className="text-xs font-bold text-navy-950 hover:text-fiik-orange transition-colors flex items-center gap-1">
+                
+                <Link to="/" className="text-xs font-bold text-[#071A3D] hover:text-[#F36C21] transition-colors flex items-center gap-1">
                   ← Home
                 </Link>
               </div>
             )}
           </div>
+
         </div>
       </div>
     </header>

@@ -25,49 +25,105 @@ export default function Sidebar() {
   const navItems = sidebarNavByRole[role] || sidebarNavByRole.startup;
 
   return (
-    <aside className="hidden md:flex md:flex-col w-64 shrink-0 bg-white border-r border-gray-200/90 min-h-[calc(100vh-96px)] shadow-sm font-sans">
-      {/* Role Portal Title */}
+    <aside
+      className="hidden md:flex md:flex-col w-64 shrink-0 min-h-[calc(100vh-96px)] shadow-xl font-sans text-white border-r transition-colors duration-300 select-none"
+      style={{
+        backgroundColor: theme.sidebarBg,
+        borderColor: theme.sidebarBorder,
+      }}
+    >
+      {/* ── Top Role Portal Identity Header ── */}
       <div
-        className="px-5 py-4 border-b border-gray-100"
-        style={{ borderLeftWidth: 4, borderLeftColor: theme.accent, borderLeftStyle: 'solid' }}
+        className="p-4 border-b flex items-center gap-3 transition-colors"
+        style={{
+          backgroundColor: 'rgba(255, 255, 255, 0.05)',
+          borderBottomColor: 'rgba(255, 255, 255, 0.1)',
+        }}
       >
-        <span className="text-[10px] font-black text-gray-400 uppercase tracking-wider block">
-          {theme.portalLabel}
-        </span>
-        <span className="text-xs font-extrabold mt-0.5 block" style={{ color: theme.accent }}>
-          {theme.roleLabel}
+        <div
+          className="h-10 w-10 rounded-xl flex items-center justify-center text-xl shrink-0 shadow-md font-bold text-white border border-white/20"
+          style={{ backgroundColor: theme.accent }}
+        >
+          {theme.icon}
+        </div>
+        <div className="min-w-0">
+          <span className="text-[10px] font-black uppercase tracking-widest text-gray-300 block">
+            {theme.portalLabel}
+          </span>
+          <h2
+            className="text-xs font-black truncate block mt-0.5"
+            style={{ color: theme.accentLight }}
+          >
+            {theme.roleLabel}
+          </h2>
+        </div>
+      </div>
+
+      {/* ── Section Label ── */}
+      <div className="px-5 pt-4 pb-2">
+        <span className="text-[9px] font-black uppercase tracking-widest text-gray-400">
+          WORKFLOW NAVIGATION
         </span>
       </div>
 
-      <nav className="py-2 flex-1">
-        <ul className="space-y-0.5">
-          {navItems.map((item) => (
-            <li key={item.key}>
-              <NavLink
-                to={item.path}
-                end={item.key === 'home'}
-                className={({ isActive }) =>
-                  `flex items-center gap-3 px-5 py-2.5 text-xs font-bold transition-all border-l-4 ${
-                    isActive
-                      ? theme.sidebarActive
-                      : 'border-transparent text-navy-950 hover:bg-gray-50'
-                  }`
-                }
-              >
-                <span aria-hidden="true" className="text-sm shrink-0">
+      {/* ── Navigation Links List ── */}
+      <nav className="flex-1 px-2 py-1 space-y-1">
+        {navItems.map((item) => (
+          <NavLink
+            key={item.key}
+            to={item.path}
+            end={item.key === 'home'}
+            className={({ isActive }) =>
+              `flex items-center gap-3 px-3.5 py-2.5 text-xs font-bold rounded-xl transition-all ${
+                isActive
+                  ? 'text-white shadow-lg'
+                  : 'text-gray-300 hover:text-white hover:bg-white/10'
+              }`
+            }
+            style={({ isActive }) =>
+              isActive
+                ? {
+                    backgroundColor: theme.accent,
+                    boxShadow: `0 4px 12px ${theme.accent}40`,
+                  }
+                : {}
+            }
+          >
+            {({ isActive }) => (
+              <>
+                <span
+                  aria-hidden="true"
+                  className={`text-base shrink-0 transition-transform ${
+                    isActive ? 'scale-110' : 'opacity-80'
+                  }`}
+                >
                   {icons[item.key] || '📄'}
                 </span>
-                <span>{item.label}</span>
-              </NavLink>
-            </li>
-          ))}
-        </ul>
+                <span className="truncate">{item.label}</span>
+                {isActive && (
+                  <span className="ml-auto text-[9px] font-black px-1.5 py-0.5 rounded bg-white/20 text-white">
+                    ACTIVE
+                  </span>
+                )}
+              </>
+            )}
+          </NavLink>
+        ))}
       </nav>
 
-      {/* Footer */}
-      <div className="p-4 border-t border-gray-100 text-[11px] text-gray-400 bg-gray-50/50">
-        <p className="font-bold text-navy-950">FIIK Portal v1.0</p>
-        <p className="mt-0.5">Government of India Initiative</p>
+      {/* ── Role Verification Badge & Footer ── */}
+      <div
+        className="p-4 border-t border-white/10 text-xs"
+        style={{ backgroundColor: 'rgba(0, 0, 0, 0.25)' }}
+      >
+        <div className="flex items-center gap-2 mb-1.5">
+          <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+          <span className="text-[10px] font-black uppercase tracking-wider text-gray-300">
+            {theme.roleLabel} Verified
+          </span>
+        </div>
+        <p className="text-[11px] font-bold text-white">FIIK Portal v1.0</p>
+        <p className="text-[10px] text-gray-400 mt-0.5">Government of India Innovation Initiative</p>
       </div>
     </aside>
   );
