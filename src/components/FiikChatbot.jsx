@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { usePilot } from '../context/PilotContext';
 
@@ -65,8 +66,11 @@ const CHAT_KNOWLEDGE_BASE = {
   }
 };
 
+const PUBLIC_ROUTES = ['/', '/login', '/role-selection', '/select-role', '/verify-role'];
+
 export default function FiikChatbot() {
   const { role } = useAuth();
+  const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
   const activeRole = role || 'startup';
   const roleKB = CHAT_KNOWLEDGE_BASE[activeRole] || CHAT_KNOWLEDGE_BASE.startup;
@@ -76,6 +80,11 @@ export default function FiikChatbot() {
   ]);
   const [input, setInput] = useState('');
 
+  // Hide chatbot on public and auth routes per requirement 8
+  if (PUBLIC_ROUTES.includes(location.pathname)) {
+    return null;
+  }
+
   const handleSend = (queryText) => {
     const textToSend = queryText || input;
     if (!textToSend.trim()) return;
@@ -84,7 +93,7 @@ export default function FiikChatbot() {
     setMessages((prev) => [...prev, userMsg]);
     setInput('');
 
-    // Demo Assistant response lookup
+    // Assistant response lookup
     setTimeout(() => {
       const matchKey = Object.keys(roleKB.answers).find(
         (key) => key.toLowerCase() === textToSend.trim().toLowerCase()
@@ -114,25 +123,26 @@ export default function FiikChatbot() {
         </button>
       )}
 
-      {/* Floating Chat Window */}
+      {/* Floating Chat Modal */}
       {isOpen && (
-        <div className="w-80 sm:w-96 bg-white border-2 border-navy-950 rounded-2xl shadow-2xl flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-5 duration-200">
+        <div className="bg-white border-2 border-navy-950 rounded-2xl shadow-2xl w-80 sm:w-96 overflow-hidden flex flex-col animate-in slide-in-from-bottom-5 duration-200">
+          
           {/* Header */}
-          <div className="bg-navy-950 text-white p-3.5 flex items-center justify-between border-b border-navy-900">
+          <div className="bg-[#071A3D] text-white p-3.5 flex items-center justify-between">
             <div className="flex items-center gap-2.5">
-              <span className="h-7 w-7 rounded-lg bg-fiik-orange text-white flex items-center justify-center font-black text-xs">
+              <span className="h-7 w-7 rounded-lg bg-[#F36C21] text-white flex items-center justify-center text-sm font-black shadow-sm">
                 F
               </span>
               <div>
-                <h3 className="font-extrabold text-xs leading-none text-white">FIIK AI Assistant</h3>
-                <span className="text-[10px] text-orange-300 font-semibold uppercase tracking-wider">
-                  Role: {activeRole.toUpperCase()}
-                </span>
+                <h4 className="text-xs font-extrabold text-white">FIIK Pilot Assistant</h4>
+                <p className="text-[10px] text-orange-300 font-semibold uppercase tracking-wider">
+                  {activeRole} operations context
+                </p>
               </div>
             </div>
             <button
               onClick={() => setIsOpen(false)}
-              className="text-gray-400 hover:text-white text-base font-bold px-2 py-0.5 rounded focus-ring"
+              className="text-gray-300 hover:text-white text-sm font-bold p-1 cursor-pointer"
               aria-label="Close Assistant"
             >
               ✕
