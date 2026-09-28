@@ -33,174 +33,97 @@ export default function Landing() {
       {/* Global Header */}
       <Header variant="public" />
 
-      {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-[#FFFDF9] via-white to-gray-50/80 border-b border-gray-200/80">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16 grid lg:grid-cols-12 gap-8 items-center">
-          
-          {/* Left Column: Headline & Action */}
-          <div className="lg:col-span-7 z-10">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-orange-100/70 border border-orange-200 text-xs font-bold text-orange-800 mb-6 shadow-sm">
-              <span className="h-2 w-2 rounded-full bg-fiik-orange animate-pulse" />
-              <span>GOVERNMENT OF INDIA INNOVATION INITIATIVE</span>
-              <span className="text-orange-400">|</span>
-              <span className="text-navy-950 font-extrabold">NATIONAL PILOT FRAMEWORK</span>
+      {/* ── Hero Section ── */}
+      <section className="relative overflow-hidden bg-[#FDFBF7] border-b border-gray-200/80">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-14 grid lg:grid-cols-2 gap-10 items-center">
+
+          {/* Left Column */}
+          <div className="z-10">
+            {/* FIIK logo text + tagline */}
+            <div className="flex items-center gap-3 mb-4">
+              <span className="h-10 w-1.5 bg-fiik-orange rounded-full shrink-0" />
+              <div>
+                <h1 className="text-5xl sm:text-6xl font-black text-navy-950 tracking-tight leading-none">FIIK</h1>
+                <p className="text-sm font-semibold text-gray-500 mt-0.5">Pilot Intelligence Procurement Mechanism</p>
+              </div>
             </div>
 
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-navy-950 tracking-tight leading-[1.15]">
-              FIIK
-              <span className="block text-2xl sm:text-3xl lg:text-4xl font-extrabold text-fiik-orange mt-2">
-                Pilot Intelligence Procurement Mechanism
-              </span>
-            </h1>
-
-            <p className="mt-4 text-lg sm:text-xl font-bold text-gray-800">
+            <h2 className="text-xl sm:text-2xl font-black text-navy-950 leading-snug mt-6">
               From Pilot to Procurement — A Verified Path for Startups.
+            </h2>
+
+            <p className="mt-3 text-sm text-gray-600 leading-relaxed max-w-lg">
+              A government-aligned platform to plan, execute, evaluate and convert pilots into
+              procurement-ready opportunities, with reusable evidence across departments.
             </p>
 
-            <p className="mt-3 text-sm sm:text-base text-gray-600 leading-relaxed max-w-2xl">
-              A structured government-startup pilot mechanism that bridges the &ldquo;missing middle.&rdquo;
-              FIIK captures verified milestone evidence, evaluates performance, and converts completed pilots
-              into standardized, portable procurement records.
-            </p>
-
-            {/* CTAs */}
-            <div className="mt-8 flex flex-wrap items-center gap-4">
+            {/* CTAs matching reference */}
+            <div className="mt-7 flex flex-wrap items-center gap-3">
               <Link
                 to="/login"
-                className="bg-fiik-orange hover:bg-fiik-orangeDark text-white font-bold px-7 py-3.5 rounded-lg shadow-md hover:shadow-lg transition-all focus-ring flex items-center gap-2 text-sm sm:text-base"
+                className="bg-fiik-orange hover:bg-fiik-orangeDark text-white font-bold px-6 py-3 rounded-lg shadow-md transition-all focus-ring flex items-center gap-2 text-sm"
               >
                 <span>Explore the Platform</span>
-                <span className="text-lg">→</span>
+                <span>→</span>
               </Link>
               <a
                 href="#how-it-works"
-                className="bg-white border-2 border-navy-950 text-navy-950 hover:bg-navy-950 hover:text-white font-bold px-6 py-3 rounded-lg transition-all focus-ring text-sm sm:text-base"
+                className="bg-white border border-gray-300 text-navy-950 hover:border-navy-950 font-bold px-5 py-3 rounded-lg transition-all focus-ring text-sm"
               >
-                How It Works
+                Know More
               </a>
-            </div>
-
-            {/* Trust Badges */}
-            <div className="mt-10 pt-6 border-t border-gray-200/60 grid grid-cols-3 gap-4 text-xs font-semibold text-gray-600">
-              <div className="flex items-center gap-2">
-                <span className="h-6 w-6 rounded-full bg-green-100 text-green-700 flex items-center justify-center font-bold">✓</span>
-                <span>Four-Party Governance</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="h-6 w-6 rounded-full bg-orange-100 text-orange-700 flex items-center justify-center font-bold">✓</span>
-                <span>PREP Passport</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="h-6 w-6 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center font-bold">✓</span>
-                <span>GeM Scaling Ready</span>
-              </div>
             </div>
           </div>
 
-          {/* Right Column: Reference Govt Illustration Artwork */}
-          <div className="lg:col-span-5 relative">
-            <div className="relative rounded-2xl overflow-hidden border-4 border-white shadow-2xl bg-white group">
+          {/* Right Column: India Gate illustration — clean bordered card, no dark overlay */}
+          <div className="relative">
+            <div className="rounded-2xl overflow-hidden border border-gray-200/80 shadow-lg bg-white">
               <img
                 src={heroImg}
                 alt="Government of India Architectural Illustration"
-                className="w-full h-auto object-cover transform group-hover:scale-105 transition-transform duration-700"
+                className="w-full h-auto object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-navy-950/80 via-transparent to-transparent flex flex-col justify-end p-6 text-white">
-                <span className="text-[11px] font-bold text-orange-300 uppercase tracking-widest">
-                  PILOT-TO-PROCUREMENT MECHANISM
-                </span>
-                <p className="text-base font-black mt-1">
-                  Startups → Pilots → Evidence → PREP → Procurement
-                </p>
-                <p className="text-xs text-gray-300 mt-1">
-                  Government of India · Ministry of Commerce &amp; Industry Initiative
-                </p>
-              </div>
             </div>
           </div>
 
         </div>
       </section>
 
-      {/* Important Statistics / Highlight Strip */}
-      <section className="bg-navy-950 text-white py-6 border-y border-navy-900">
-        <div className="max-w-7xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-6 text-center divide-x divide-navy-800">
-          <div className="px-2">
-            <p className="text-2xl sm:text-3xl font-black text-fiik-orange">4-Party</p>
-            <p className="text-xs text-gray-300 font-semibold mt-1">Stakeholder Governance</p>
-          </div>
-          <div className="px-2">
-            <p className="text-2xl sm:text-3xl font-black text-green-400">100%</p>
-            <p className="text-xs text-gray-300 font-semibold mt-1">Verified Evidence Ledger</p>
-          </div>
-          <div className="px-2">
-            <p className="text-2xl sm:text-3xl font-black text-blue-400">PREP</p>
-            <p className="text-xs text-gray-300 font-semibold mt-1">Portable Passport Record</p>
-          </div>
-          <div className="px-2">
-            <p className="text-2xl sm:text-3xl font-black text-amber-400">Scale-Up</p>
-            <p className="text-xs text-gray-300 font-semibold mt-1">Cross-Dept &amp; GeM Adoption</p>
-          </div>
-        </div>
-      </section>
-
-      {/* SIH Problem Statement & Stakeholders Section */}
+      {/* ── Problem Statement & Key Stakeholders ── */}
       <section id="about" className="py-14 bg-white border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-12 gap-8 items-stretch">
-            
-            {/* Problem Statement Card */}
-            <div className="lg:col-span-6 bg-gradient-to-br from-orange-50/90 via-white to-amber-50/50 border-2 border-orange-200/80 rounded-2xl p-7 shadow-card flex flex-col justify-between">
-              <div>
-                <div className="flex items-center gap-3 mb-4">
-                  <span className="h-10 w-10 rounded-xl bg-fiik-orange text-white flex items-center justify-center font-bold text-xl shadow-sm">
-                    📄
-                  </span>
-                  <div>
-                    <span className="text-xs font-black uppercase tracking-wider text-fiik-orangeDark bg-orange-100 px-2.5 py-0.5 rounded-full">
-                      NATIONAL GOVERNANCE MANDATE
-                    </span>
-                    <h3 className="text-base font-extrabold text-navy-950 mt-1">
-                      Pilot Mechanism for Government &amp; Startups
-                    </h3>
-                  </div>
-                </div>
-                <p className="text-sm text-gray-800 font-medium leading-relaxed italic bg-white/80 p-4 rounded-xl border border-orange-100">
-                  &ldquo;A standardized mechanism for government departments to pilot innovative
-                  solutions with startups, evaluate their performance, and enable faster procurement
-                  of proven solutions.&rdquo;
-                </p>
+          <div className="grid lg:grid-cols-2 gap-8 items-start">
+
+            {/* Problem Statement Card — with SIH badge like reference */}
+            <div className="bg-orange-50/60 border border-orange-200/80 rounded-2xl p-6 shadow-sm">
+              <div className="flex items-center gap-3 mb-4">
+                <span className="text-fiik-orange text-xl">📄</span>
+                <span className="bg-navy-950 text-white text-[10px] font-black px-2.5 py-0.5 rounded">SIH26136</span>
+                <span className="text-sm font-extrabold text-navy-950">Selected Problem Statement</span>
               </div>
-              <div className="mt-6 pt-4 border-t border-orange-200/60 flex items-center justify-between text-xs text-gray-600">
-                <span className="font-bold text-navy-950">Target Outcome:</span>
-                <span className="font-semibold text-fiik-orangeDark">Evidence-Backed Procurement</span>
-              </div>
+              <p className="text-sm text-gray-700 leading-relaxed">
+                <span className="text-gray-500">"</span>To design and develop a mechanism for{' '}
+                <span className="text-fiik-orange font-semibold">government departments</span> to pilot innovative
+                solutions with startups, evaluate their performance, and enable faster procurement of
+                proven solutions.<span className="text-gray-500">"</span>
+              </p>
             </div>
 
-            {/* Stakeholders Card */}
-            <div className="lg:col-span-6 bg-white border border-gray-200 rounded-2xl p-7 shadow-card flex flex-col justify-between">
-              <div>
-                <div className="flex items-center justify-between mb-4 pb-3 border-b border-gray-100">
-                  <h3 className="text-base font-bold text-navy-950">Key Stakeholders in FIIK</h3>
-                  <span className="text-xs font-semibold text-gray-400">4-Party Alignment</span>
-                </div>
-                <div className="grid sm:grid-cols-2 gap-4">
-                  {stakeholders.map((s) => (
-                    <div key={s.key} className="p-3.5 bg-gray-50/80 border border-gray-200/80 rounded-xl flex items-center gap-3 hover:bg-orange-50/40 transition-colors">
-                      <span className="text-2xl">{stakeholderIcons[s.key] || '👥'}</span>
-                      <div>
-                        <p className="text-xs font-bold text-navy-950">{s.label}</p>
-                        <p className="text-[10px] text-gray-500 mt-0.5">Participating Authority</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <div className="mt-6 pt-4 border-t border-gray-100 flex justify-end">
-                <Link to="/role-selection" className="text-xs font-bold text-fiik-orange hover:underline flex items-center gap-1">
-                  <span>Select Your Stakeholder Role</span>
-                  <span>→</span>
-                </Link>
+            {/* Key Stakeholders */}
+            <div>
+              <h3 className="text-lg font-extrabold text-navy-950 mb-4">Key Stakeholders</h3>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                {[
+                  { icon: '🚀', label: 'Startups /\nInnovators' },
+                  { icon: '🏛️', label: 'Government\nDepartments' },
+                  { icon: '👥', label: 'Evaluator /\nTechnical Expert\n(MSInS)' },
+                  { icon: '⚖️', label: 'Procurement\nSystems (GeM)' },
+                ].map((s) => (
+                  <div key={s.label} className="bg-white border border-gray-200 rounded-xl p-4 flex flex-col items-center text-center gap-2 hover:border-orange-200 transition-colors shadow-sm">
+                    <span className="text-2xl text-fiik-orange">{s.icon}</span>
+                    <p className="text-[11px] font-bold text-navy-950 whitespace-pre-line leading-snug">{s.label}</p>
+                  </div>
+                ))}
               </div>
             </div>
 
@@ -208,7 +131,7 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* Key Pillars of FIIK */}
+      {/* ── Key Pillars of FIIK ── */}
       <section id="features" className="py-16 bg-gray-50/60 border-b border-gray-200/80">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-12">
@@ -241,7 +164,7 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* Visual Workflow Journey: Problem → PREP → Procurement */}
+      {/* ── How FIIK Works ── */}
       <section id="how-it-works" className="py-16 bg-white border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-12">
@@ -274,7 +197,7 @@ export default function Landing() {
             ))}
           </div>
 
-          {/* Workflow Note Banner */}
+          {/* Workflow Banner */}
           <div className="mt-10 bg-gradient-to-r from-orange-500 via-fiik-orange to-amber-600 text-white rounded-2xl p-6 shadow-lg flex flex-col sm:flex-row items-center justify-between gap-4">
             <div>
               <span className="text-xs uppercase font-black tracking-widest opacity-90">GOVERNANCE ENFORCEMENT</span>
@@ -293,7 +216,7 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* Why FIIK / Bridging the Missing Middle */}
+      {/* ── Why FIIK ── */}
       <section className="py-16 bg-gray-50/80 border-b border-gray-200/80">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-12">
@@ -329,15 +252,13 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* Portal Footer */}
+      {/* ── Footer ── */}
       <footer id="contact" className="gov-header-top text-white">
         <div className="tricolor-bar" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-8 border-b border-navy-900 text-xs">
           <div>
             <div className="flex items-center gap-2 mb-3">
-              <span className="h-8 w-8 rounded bg-fiik-orange text-white flex items-center justify-center font-black text-sm">
-                F
-              </span>
+              <span className="h-8 w-8 rounded bg-fiik-orange text-white flex items-center justify-center font-black text-sm">F</span>
               <span className="font-black text-lg text-white">FIIK</span>
             </div>
             <p className="text-gray-400 leading-relaxed">

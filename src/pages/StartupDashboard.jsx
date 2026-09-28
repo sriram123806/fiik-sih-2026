@@ -45,13 +45,12 @@ export default function StartupDashboard() {
             </div>
 
             {/* Right Side India Gate Artwork Illustration (Image 4 reference) */}
-            <div className="w-full md:w-80 h-36 sm:h-44 relative rounded-xl overflow-hidden shrink-0 shadow-md border-2 border-white">
+            <div className="w-full md:w-80 h-36 sm:h-48 relative rounded-xl overflow-hidden shrink-0 shadow-sm border border-orange-100/60">
               <img
                 src={heroImg}
                 alt="Government Architecture Artwork"
-                className="w-full h-full object-cover transform scale-105"
+                className="w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-orange-950/40 via-transparent to-transparent" />
             </div>
           </div>
 
