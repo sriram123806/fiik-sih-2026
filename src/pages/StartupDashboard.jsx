@@ -2,108 +2,149 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import Sidebar from '../components/Sidebar';
-import StatusBadge from '../components/StatusBadge';
 import PilotProgressChart from '../components/PilotProgressChart';
 import { useAuth } from '../context/AuthContext';
 import { usePilot } from '../context/PilotContext';
-import { currentStartup, summaryCardsByRole, notificationsByRole } from '../data/mockData';
+import { currentStartup, notificationsByRole } from '../data/mockData';
+import { useRoleTheme } from '../utils/roleTheme';
 import heroImg from '../assets/india-govt-hero.png';
+
+// Role-specific welcome copy
+const ROLE_COPY = {
+  startup: {
+    welcome: (name) => `Welcome, ${name}`,
+    subtitle: 'Track your pilots, submit evidence, and build your path to procurement.',
+    cta: 'Browse Open Problems',
+    ctaPath: '/work-order',
+    cards: [
+      { icon: '📄', label: 'Applications Submitted', value: 2, colorBox: '' },
+      { icon: '🚀', label: 'Active Pilot', value: 1, colorBox: '' },
+      { icon: '🚩', label: 'Milestones Completed', value: 1, colorBox: '' },
+      { icon: '🛡️', label: 'PREP Generated', value: 0, colorBox: '' },
+    ],
+  },
+  department: {
+    welcome: (name) => `Welcome, ${name}`,
+    subtitle: 'Review pilot applications, track startup progress, and enable procurement.',
+    cta: 'Review Pilot Requests',
+    ctaPath: '/four-party-review',
+    cards: [
+      { icon: '📋', label: 'Pending Pilot Requests', value: 3, colorBox: '' },
+      { icon: '🔄', label: 'Active Pilots', value: 2, colorBox: '' },
+      { icon: '✅', label: 'Approved Work Orders', value: 1, colorBox: '' },
+      { icon: '📦', label: 'PREP Ready', value: 0, colorBox: '' },
+    ],
+  },
+  evaluator: {
+    welcome: (name) => `Welcome, ${name}`,
+    subtitle: 'Review submitted evidence, evaluate milestones, and validate pilot outcomes.',
+    cta: 'View Pending Evaluations',
+    ctaPath: '/field-evaluation',
+    cards: [
+      { icon: '🔍', label: 'Pending Evaluations', value: 2, colorBox: '' },
+      { icon: '📊', label: 'Milestones Reviewed', value: 4, colorBox: '' },
+      { icon: '✅', label: 'Approved Milestones', value: 3, colorBox: '' },
+      { icon: '⏳', label: 'Awaiting Evidence', value: 1, colorBox: '' },
+    ],
+  },
+  admin: {
+    welcome: (name) => `Welcome, ${name}`,
+    subtitle: 'Issue work orders, approve payments, and oversee the pilot-to-procurement pipeline.',
+    cta: 'Issue Work Order',
+    ctaPath: '/work-order',
+    cards: [
+      { icon: '📋', label: 'Active Pilots', value: 5, colorBox: '' },
+      { icon: '💳', label: 'Pending Payments', value: 2, colorBox: '' },
+      { icon: '✅', label: 'PREP Generated', value: 1, colorBox: '' },
+      { icon: '⚙️', label: 'Work Orders Issued', value: 4, colorBox: '' },
+    ],
+  },
+};
 
 export default function StartupDashboard() {
   const { role, user } = useAuth();
   const { pilot, stages } = usePilot();
   const navigate = useNavigate();
+  const theme = useRoleTheme(role);
 
   const activeRole = role || 'startup';
+  const copy = ROLE_COPY[activeRole] || ROLE_COPY.startup;
   const notifications = notificationsByRole[activeRole] || notificationsByRole.startup || [];
+  const displayName = user?.name || currentStartup?.name || theme.welcomeName;
 
   return (
     <div className="min-h-screen bg-[#FDFBF7] flex flex-col font-sans">
       <Header variant="dashboard" />
       <div className="flex flex-1">
         <Sidebar />
-        <main className="flex-1 px-6 py-8 max-w-6xl">
-          
-          {/* Welcome Banner Card (Image 4 reference: Peach bg + India Gate vector artwork right) */}
-          <div className="bg-[#FDF5EC] border-2 border-orange-200/80 rounded-2xl p-6 sm:p-8 shadow-sm flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
+        <main className="flex-1 px-6 py-8 max-w-5xl">
+
+          {/* ── Welcome Banner ── */}
+          <div
+            className={`rounded-2xl p-6 sm:p-8 shadow-sm flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden border-2`}
+            style={{ backgroundColor: theme.accentLight, borderColor: theme.accentBorder }}
+          >
             <div className="z-10 max-w-xl">
+              {/* Portal identity badge */}
+              <span
+                className="inline-flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded-full border mb-3"
+                style={{ backgroundColor: 'white', borderColor: theme.accentBorder, color: theme.accent }}
+              >
+                <span>{theme.icon}</span>
+                <span>{theme.portalLabel}</span>
+              </span>
               <h1 className="text-2xl sm:text-3xl font-black text-navy-950 tracking-tight">
-                Welcome, {user?.name || currentStartup?.name || 'GreenGrid Technologies'}
+                {copy.welcome(displayName)}
               </h1>
               <p className="text-xs sm:text-sm text-gray-700 mt-2 font-medium leading-relaxed">
-                Track your pilots, submit evidence, and build your path to procurement.
+                {copy.subtitle}
               </p>
               <div className="mt-5 flex items-center gap-3">
                 <Link
-                  to="/work-order"
-                  className="bg-[#E05625] hover:bg-[#c6471c] text-white text-xs font-extrabold px-5 py-3 rounded-xl shadow-md transition-all focus-ring flex items-center gap-2"
+                  to={copy.ctaPath}
+                  className="text-white text-xs font-extrabold px-5 py-3 rounded-xl shadow-md transition-all focus-ring flex items-center gap-2"
+                  style={{ backgroundColor: theme.accent }}
+                  onMouseEnter={e => (e.currentTarget.style.backgroundColor = theme.accentDark)}
+                  onMouseLeave={e => (e.currentTarget.style.backgroundColor = theme.accent)}
                 >
-                  <span>Browse Open Problems</span>
+                  <span>{copy.cta}</span>
                   <span>→</span>
                 </Link>
               </div>
             </div>
 
-            {/* Right Side India Gate Artwork Illustration (Image 4 reference) */}
-            <div className="w-full md:w-80 h-36 sm:h-48 relative rounded-xl overflow-hidden shrink-0 shadow-sm border border-orange-100/60">
-              <img
-                src={heroImg}
-                alt="Government Architecture Artwork"
-                className="w-full h-full object-cover"
-              />
+            {/* Right illustration */}
+            <div className="w-full md:w-72 h-36 sm:h-44 relative rounded-xl overflow-hidden shrink-0 shadow-sm border border-white/60">
+              <img src={heroImg} alt="Government Architecture Artwork" className="w-full h-full object-cover" />
             </div>
           </div>
 
-          {/* 4 Summary Metric Cards (Image 4 reference) */}
+          {/* ── 4 Summary Metric Cards ── */}
           <div className="mt-6 grid grid-cols-2 lg:grid-cols-4 gap-4">
-            <div className="bg-white border border-gray-200/90 rounded-2xl p-5 shadow-card flex items-center gap-4">
-              <div className="h-12 w-12 rounded-xl bg-blue-50 text-blue-700 border border-blue-200 flex items-center justify-center text-xl shrink-0">
-                📄
+            {copy.cards.map((card, idx) => (
+              <div key={idx} className="bg-white border border-gray-200/90 rounded-2xl p-5 shadow-card flex items-center gap-4">
+                <div
+                  className="h-12 w-12 rounded-xl flex items-center justify-center text-xl shrink-0 border"
+                  style={{ backgroundColor: theme.accentLight, borderColor: theme.accentBorder, color: theme.accent }}
+                >
+                  {card.icon}
+                </div>
+                <div>
+                  <p className="text-2xl font-black text-navy-950">{card.value}</p>
+                  <p className="text-xs text-gray-500 font-semibold leading-tight mt-0.5">{card.label}</p>
+                </div>
               </div>
-              <div>
-                <p className="text-2xl font-black text-navy-950">2</p>
-                <p className="text-xs text-gray-500 font-semibold leading-tight mt-0.5">Applications Submitted</p>
-              </div>
-            </div>
-
-            <div className="bg-white border border-gray-200/90 rounded-2xl p-5 shadow-card flex items-center gap-4">
-              <div className="h-12 w-12 rounded-xl bg-green-50 text-green-700 border border-green-200 flex items-center justify-center text-xl shrink-0">
-                🚀
-              </div>
-              <div>
-                <p className="text-2xl font-black text-navy-950">1</p>
-                <p className="text-xs text-gray-500 font-semibold leading-tight mt-0.5">Active Pilot</p>
-              </div>
-            </div>
-
-            <div className="bg-white border border-gray-200/90 rounded-2xl p-5 shadow-card flex items-center gap-4">
-              <div className="h-12 w-12 rounded-xl bg-amber-50 text-amber-700 border border-amber-200 flex items-center justify-center text-xl shrink-0">
-                🚩
-              </div>
-              <div>
-                <p className="text-2xl font-black text-navy-950">1</p>
-                <p className="text-xs text-gray-500 font-semibold leading-tight mt-0.5">Milestones Completed</p>
-              </div>
-            </div>
-
-            <div className="bg-white border border-gray-200/90 rounded-2xl p-5 shadow-card flex items-center gap-4">
-              <div className="h-12 w-12 rounded-xl bg-purple-50 text-purple-700 border border-purple-200 flex items-center justify-center text-xl shrink-0">
-                🛡️
-              </div>
-              <div>
-                <p className="text-2xl font-black text-navy-950">0</p>
-                <p className="text-xs text-gray-500 font-semibold leading-tight mt-0.5">PREP Generated</p>
-              </div>
-            </div>
+            ))}
           </div>
 
-          {/* Active Pilot Card (Image 4 reference) */}
+          {/* ── Active Pilot Card ── */}
           <div className="mt-6 bg-white border border-gray-200/90 rounded-2xl shadow-card overflow-hidden">
             <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
               <h2 className="font-extrabold text-navy-950 text-base">Active Pilot</h2>
               <Link
                 to="/execution"
-                className="text-xs font-bold text-fiik-orange hover:text-fiik-orangeDark border border-orange-200 bg-orange-50 px-3.5 py-1.5 rounded-lg flex items-center gap-1 transition-colors"
+                className="text-xs font-bold border px-3.5 py-1.5 rounded-lg flex items-center gap-1 transition-colors"
+                style={{ color: theme.accent, borderColor: theme.accentBorder, backgroundColor: theme.accentLight }}
               >
                 <span>View Details</span>
                 <span>→</span>
@@ -113,12 +154,19 @@ export default function StartupDashboard() {
               <div className="flex flex-wrap items-start justify-between gap-4">
                 <div>
                   <div className="flex items-center gap-3">
-                    <h3 className="font-extrabold text-navy-950 text-lg">{pilot?.name || 'Smart Waste Segregation System'}</h3>
-                    <span className="text-xs font-bold text-blue-700 bg-blue-50 border border-blue-200 px-3 py-0.5 rounded-full">
+                    <h3 className="font-extrabold text-navy-950 text-lg">
+                      {pilot?.name || 'Smart Waste Segregation System'}
+                    </h3>
+                    <span
+                      className="text-xs font-bold px-3 py-0.5 rounded-full border"
+                      style={{ backgroundColor: theme.accentLight, color: theme.accentText, borderColor: theme.accentBorder }}
+                    >
                       In Progress
                     </span>
                   </div>
-                  <p className="text-xs text-gray-500 mt-1 font-semibold">{pilot?.department || 'Department of Urban Development'}</p>
+                  <p className="text-xs text-gray-500 mt-1 font-semibold">
+                    {pilot?.department || 'Department of Urban Development'}
+                  </p>
                 </div>
                 <div className="flex items-center gap-6 text-xs text-gray-500 bg-gray-50 p-3 rounded-xl border border-gray-200">
                   <div>
@@ -136,7 +184,7 @@ export default function StartupDashboard() {
                 </div>
               </div>
 
-              {/* Connected Stepper (Image 4 reference: 1 Registration -> 2 Requirement -> 3 Four-Party Review -> 4 Work Order -> 5 Execution [Orange] -> 6 Evidence Review -> 7 PREP) */}
+              {/* Connected Stepper — role-colored */}
               <div className="mt-8 pt-4 border-t border-gray-100">
                 <div className="overflow-x-auto pb-2">
                   <div className="flex items-center justify-between min-w-[700px] px-2">
@@ -156,29 +204,30 @@ export default function StartupDashboard() {
                               st.done
                                 ? 'bg-green-600 text-white'
                                 : st.active
-                                ? 'bg-[#E05625] text-white ring-4 ring-orange-100'
+                                ? 'text-white ring-4 ring-opacity-20'
                                 : 'bg-gray-100 text-gray-400 border border-gray-300'
                             }`}
+                            style={
+                              st.active
+                                ? { backgroundColor: theme.accent, boxShadow: `0 0 0 4px ${theme.accentLight}` }
+                                : {}
+                            }
                           >
                             {st.done ? '✓' : st.step}
                           </span>
                           <span
                             className={`text-[11px] mt-2 font-bold ${
-                              st.active
-                                ? 'text-[#E05625]'
-                                : st.done
-                                ? 'text-gray-800'
-                                : 'text-gray-400'
+                              st.done ? 'text-gray-800' : st.pending ? 'text-gray-400' : ''
                             }`}
+                            style={st.active ? { color: theme.accent } : {}}
                           >
                             {st.label}
                           </span>
                         </div>
                         {i < arr.length - 1 && (
                           <span
-                            className={`h-0.5 flex-1 mx-1 ${
-                              st.done ? 'bg-green-600' : 'bg-gray-200'
-                            }`}
+                            className={`h-0.5 flex-1 mx-1 ${st.done ? '' : 'bg-gray-200'}`}
+                            style={st.done ? { backgroundColor: '#16a34a' } : {}}
                           />
                         )}
                       </React.Fragment>
@@ -187,7 +236,7 @@ export default function StartupDashboard() {
                 </div>
 
                 <p className="text-[11px] text-gray-500 mt-4 leading-relaxed font-medium bg-gray-50 p-3 rounded-lg border border-gray-200">
-                  PREP stands for <strong className="font-bold text-navy-950">Procurement Readiness Evidence Passport</strong> &mdash; available only after all milestones, approvals and payments are complete.
+                  PREP stands for <strong className="font-bold text-navy-950">Procurement Readiness Evidence Passport</strong> — available only after all milestones, approvals and payments are complete.
                 </p>
               </div>
 
@@ -198,11 +247,16 @@ export default function StartupDashboard() {
             </div>
           </div>
 
-          {/* Notifications */}
+          {/* ── Notifications ── */}
           <div className="mt-8 bg-white border border-gray-200/90 rounded-2xl shadow-card overflow-hidden">
             <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
-              <h2 className="font-extrabold text-navy-950 text-sm">Role Notifications</h2>
-              <span className="text-xs text-fiik-orange font-bold cursor-pointer hover:underline">View All</span>
+              <h2 className="font-extrabold text-navy-950 text-sm">Notifications</h2>
+              <span
+                className="text-xs font-bold cursor-pointer hover:underline"
+                style={{ color: theme.accent }}
+              >
+                View All
+              </span>
             </div>
             <ul className="divide-y divide-gray-100">
               {notifications.map((n) => (

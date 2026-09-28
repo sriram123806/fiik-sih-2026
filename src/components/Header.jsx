@@ -1,17 +1,12 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { useRoleTheme } from '../utils/roleTheme';
 
 export default function Header({ variant = 'public', showHomeLink = false, backTo }) {
-  const { role, chooseRole, user } = useAuth();
+  const { role, chooseRole } = useAuth();
   const navigate = useNavigate();
-
-  const roleLabels = {
-    startup: 'Startup (GreenGrid)',
-    department: 'Dept. of Urban Development',
-    evaluator: 'Evaluator (MSInS)',
-    admin: 'MSInS Admin Authority',
-  };
+  const theme = useRoleTheme(role);
 
   const handleRoleChange = (newRole) => {
     chooseRole(newRole);
@@ -20,8 +15,8 @@ export default function Header({ variant = 'public', showHomeLink = false, backT
 
   return (
     <header className="sticky top-0 z-40 bg-white shadow-sm font-sans">
-      
-      {/* Top Dark Navy Government Bar */}
+
+      {/* ── Top Dark Navy Government Bar ── */}
       <div className="bg-[#0B192C] text-white text-xs py-1.5 px-4 border-b border-navy-900">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3 font-semibold text-[11px] opacity-95">
@@ -38,14 +33,27 @@ export default function Header({ variant = 'public', showHomeLink = false, backT
                 </button>
                 <button className="relative hover:text-orange-300 transition-colors cursor-pointer">
                   <span>🔔</span>
-                  <span className="absolute -top-1 -right-1 h-2 w-2 rounded-full bg-fiik-orange" />
+                  <span
+                    className="absolute -top-1 -right-1 h-2 w-2 rounded-full"
+                    style={{ backgroundColor: theme.accent }}
+                  />
                 </button>
-                <div className="flex items-center gap-2 bg-navy-900/90 px-2.5 py-1 rounded-full border border-navy-700">
-                  <span className="h-5 w-5 rounded-full bg-fiik-orange text-white flex items-center justify-center text-[10px] font-bold uppercase">
-                    {role === 'startup' ? 'S' : role === 'department' ? 'G' : role === 'evaluator' ? 'E' : 'A'}
+                {/* Role pill — accent-colored to reinforce portal identity */}
+                <div
+                  className="flex items-center gap-2 px-2.5 py-1 rounded-full border"
+                  style={{
+                    backgroundColor: theme.accentLight,
+                    borderColor: theme.accentBorder,
+                  }}
+                >
+                  <span
+                    className="h-5 w-5 rounded-full text-white flex items-center justify-center text-[10px] font-black"
+                    style={{ backgroundColor: theme.accent }}
+                  >
+                    {theme.initial}
                   </span>
-                  <span className="font-bold text-white text-[11px]">
-                    {role === 'startup' ? 'Startup' : role === 'department' ? 'Government Department' : role === 'evaluator' ? 'Technical Evaluator' : 'MSInS Admin'}
+                  <span className="font-bold text-[11px]" style={{ color: theme.accentText }}>
+                    {theme.roleLabel}
                   </span>
                 </div>
               </>
@@ -63,10 +71,10 @@ export default function Header({ variant = 'public', showHomeLink = false, backT
         </div>
       </div>
 
-      {/* Tricolor Ribbon Bar */}
+      {/* ── Tricolor Ribbon ── */}
       <div className="tricolor-bar" />
 
-      {/* Main White Branding Header */}
+      {/* ── Main White Branding Header ── */}
       <div className="bg-white border-b border-gray-200/90 py-3 px-4">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-4 min-w-0">
@@ -98,17 +106,16 @@ export default function Header({ variant = 'public', showHomeLink = false, backT
             </Link>
           </div>
 
-          {variant === 'public' && !showHomeLink && (
-            <nav className="hidden lg:flex items-center gap-6 text-xs font-extrabold text-gray-700">
-              <a href="#about" className="hover:text-fiik-orange transition-colors">About</a>
-              <a href="#how-it-works" className="hover:text-fiik-orange transition-colors">How It Works</a>
-              <a href="#features" className="hover:text-fiik-orange transition-colors">Features</a>
-              <a href="#resources" className="hover:text-fiik-orange transition-colors">Resources</a>
-              <a href="#contact" className="hover:text-fiik-orange transition-colors">Contact</a>
-            </nav>
-          )}
-
+          {/* Right side */}
           <div className="flex items-center gap-3">
+            {variant === 'public' && !showHomeLink && (
+              <nav className="hidden lg:flex items-center gap-6 text-xs font-extrabold text-gray-700">
+                <a href="#about" className="hover:text-fiik-orange transition-colors">About</a>
+                <a href="#how-it-works" className="hover:text-fiik-orange transition-colors">How It Works</a>
+                <a href="#features" className="hover:text-fiik-orange transition-colors">Features</a>
+              </nav>
+            )}
+
             {showHomeLink && (
               <Link to="/" className="text-xs font-bold text-navy-950 hover:text-fiik-orange transition-colors flex items-center gap-1">
                 ← Home
@@ -123,20 +130,21 @@ export default function Header({ variant = 'public', showHomeLink = false, backT
                 <span>→</span>
               </Link>
             )}
+
             {variant === 'dashboard' && (
               <div className="flex items-center gap-3 text-xs">
-                {/* Active Role Selector */}
+                {/* Demo: role switcher */}
                 <div className="flex items-center gap-2 border-r border-gray-200 pr-3">
-                  <span className="text-gray-400 font-bold text-[11px]">Role:</span>
+                  <span className="text-gray-400 font-bold text-[11px]">Switch Role:</span>
                   <select
                     value={role}
                     onChange={(e) => handleRoleChange(e.target.value)}
-                    className="text-xs font-bold text-navy-950 bg-orange-50/80 border border-orange-200 rounded-md px-2.5 py-1 focus-ring cursor-pointer"
+                    className="text-xs font-bold text-navy-950 bg-gray-50 border border-gray-200 rounded-md px-2.5 py-1 focus-ring cursor-pointer"
                   >
                     <option value="startup">🚀 Startup</option>
                     <option value="department">🏛️ Govt Dept</option>
                     <option value="evaluator">👥 Evaluator</option>
-                    <option value="admin">⚖️ MSInS Admin</option>
+                    <option value="admin">🛡️ MSInS</option>
                   </select>
                 </div>
                 <Link to="/" className="text-xs font-bold text-navy-950 hover:text-fiik-orange transition-colors flex items-center gap-1">
