@@ -136,7 +136,7 @@ export default function StartupDashboard() {
                   </span>
                   <span className="text-xs font-bold text-emerald-300 bg-emerald-500/20 px-2.5 py-1 rounded-full border border-emerald-400/40 flex items-center gap-1.5">
                     <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-                    Validated in FIIK Pilot Registry
+                    Recorded in FIIK Pilot Registry (Prototype)
                   </span>
                 </div>
 

@@ -36,7 +36,7 @@ export default function ApprovalPayment() {
       {/* ── Level 1 Hero Banner ── */}
       <FiikHero
         tag="ESCROW DISBURSEMENT &amp; TREASURY INTEGRATION"
-        verifiedLabel="PFMS Escrow Verification Passed"
+        verifiedLabel="Simulated PFMS Escrow Protocol"
         title="Milestone Approval &amp; Escrow Payment Processing"
         subtitle="Multi-party milestone sign-offs trigger automated escrow fund release and authorize transition into PREP Passport issuance."
         pipelineStep={4}
@@ -57,11 +57,11 @@ export default function ApprovalPayment() {
 
       {/* ── Level 2: Dark Operational Escrow Treasury Stream ── */}
       <FiikDarkPanel
-        title="Escrow Account Liquidity &amp; PFMS Treasury Telemetry"
-        subtitle="Dedicated public procurement escrow account governed under State Innovation Society guidelines"
+        title="Escrow Account Liquidity &amp; Simulated PFMS Treasury Telemetry"
+        subtitle="Dedicated public procurement escrow account governed under State Innovation Society guidelines (Prototype Simulation)"
         badge={
           <span className="text-xs font-black px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/40">
-            Escrow Status: Liquid &amp; Ready
+            Escrow Status: Liquid &amp; Ready (Demo)
           </span>
         }
       >
@@ -83,7 +83,7 @@ export default function ApprovalPayment() {
           </div>
           <div className="p-3.5 rounded-xl bg-white/5 border border-white/10">
             <span className="text-gray-400 font-bold block text-[11px]">TREASURY GATEWAY</span>
-            <span className="text-xl font-black text-white block mt-1">PFMS Direct</span>
+            <span className="text-xl font-black text-white block mt-1">PFMS (Simulated)</span>
             <span className="text-[10px] text-emerald-400 mt-0.5 block">Validated Protocol</span>
           </div>
         </div>
@@ -137,7 +137,7 @@ export default function ApprovalPayment() {
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs">
           <Field label="Approved Amount" value={paymentDetails?.approvedAmount || '₹ 5,00,000'} />
           <Field label="Active Milestone" value="Milestone 2 of 5" />
-          <Field label="Disbursement Mode" value={paymentDetails?.paymentType || 'PFMS / State Escrow'} />
+          <Field label="Disbursement Mode" value={paymentDetails?.paymentType || 'PFMS / State Escrow (Simulated)'} />
           <Field label="Expected Release Date" value={paymentDetails?.expectedReleaseDate || '12 Oct 2025'} />
         </div>
       </FiikDocumentCard>

@@ -59,7 +59,7 @@ const SLIDES = [
       'The single verifiable digital credential that proves your startup solution works. Once verified, PREP enables instant scaling and direct procurement across GeM and all state departments.',
     image: procurementLegalImg,
     category: 'PREP Passport',
-    stats: 'Instant GeM Scaling · Portable Digital Passport',
+    stats: 'Scale-Up Ready · Portable Digital Passport',
     tag: 'Direct Procurement',
   },
 ];

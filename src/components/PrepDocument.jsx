@@ -111,7 +111,7 @@ export default function PrepDocument({
               <p className="text-xs font-black text-navy-950">Cryptographic Hash</p>
               <p className="text-[10px] text-gray-500 font-mono">0x7f8a9b2c...4d3e2f1a</p>
               <p className="text-[10px] text-emerald-700 font-bold mt-0.5">
-                ✓ Validated in MSInS State Pilot Registry
+                ✓ Recorded in FIIK Pilot Registry (Prototype)
               </p>
             </div>
           </div>
@@ -119,7 +119,7 @@ export default function PrepDocument({
           <div className="text-right">
             <span className="text-[10px] font-bold text-gray-400 uppercase block">Procurement Suitability</span>
             <span className="inline-block bg-emerald-600 text-white text-[10px] font-black px-2.5 py-1 rounded-md shadow-xs mt-0.5">
-              RECOMMENDED FOR DIRECT GeM SCALING
+              RECOMMENDED FOR GeM SCALING (SIMULATED)
             </span>
           </div>
         </div>

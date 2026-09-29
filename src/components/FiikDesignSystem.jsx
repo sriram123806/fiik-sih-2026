@@ -44,7 +44,7 @@ export function FiikPageShell({
 export function FiikHero({
   tag = 'OFFICIAL FIIK WORKFLOW',
   tagColor = 'amber',
-  verifiedLabel = 'State Registry Verified',
+  verifiedLabel = 'FIIK Registry (Prototype)',
   title,
   subtitle,
   rightSlot,
