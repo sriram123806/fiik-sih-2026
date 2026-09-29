@@ -51,7 +51,7 @@ export default function CompletedPilot() {
                     🛂 OFFICIAL DIGITAL CREDENTIAL · PORTABLE EVIDENCE
                   </span>
                   <span className="text-xs font-bold text-emerald-400 bg-emerald-500/20 px-2.5 py-0.5 rounded-full border border-emerald-400/40">
-                    ✓ Validated in FIIK Pilot Registry
+                    ✓ Recorded in FIIK Pilot Registry (Prototype)
                   </span>
                 </div>
                 <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight leading-snug">
@@ -96,7 +96,7 @@ export default function CompletedPilot() {
               </div>
               <div className="p-2 bg-emerald-600/30 rounded-lg border border-emerald-400 text-emerald-200">
                 <span>5. Procurement</span>
-                <span className="block text-[10px] text-emerald-100 font-normal">GeM Scale-Up Ready</span>
+                <span className="block text-[10px] text-emerald-100 font-normal">GeM Scale-Up (Simulated)</span>
               </div>
             </div>
           </div>
@@ -325,7 +325,7 @@ export default function CompletedPilot() {
                     </p>
                     <div className="mt-3 flex items-center justify-between text-[11px] font-bold text-gray-500">
                       <span>Status: PREP Record Inspected</span>
-                      <span className="text-emerald-700">✓ Fast-Track Procurement Eligible</span>
+                      <span className="text-emerald-700">✓ Direct Procurement Eligible (Simulated)</span>
                     </div>
                   </div>
                 ))}
