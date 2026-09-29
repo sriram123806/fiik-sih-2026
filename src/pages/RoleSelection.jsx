@@ -9,49 +9,53 @@ import techAiImg from '../assets/tech-ai-interface.jpg';
 import procurementLegalImg from '../assets/procurement-legal.jpg';
 
 const roleCardConfigs = {
-  department: {
-    bg: 'bg-[#FDF5EC] border-orange-300',
-    iconBg: 'bg-white text-[#E05625] border border-orange-200',
-    icon: '🏛️',
-    title: 'Government Department',
-    desc: 'Post challenges, review pilot proposals, inspect independent evaluator audits, and enable scale-up procurement.',
-    btn: 'bg-[#E05625] hover:bg-[#c6471c]',
-    image: govtBuildingImg,
-    tag: 'ORANGE PORTAL',
-    tagColor: 'bg-orange-100 text-orange-900 border-orange-200',
-  },
   startup: {
-    bg: 'bg-[#EBF5FF] border-blue-300',
+    bg: 'border-blue-300 hover:border-blue-500',
     iconBg: 'bg-white text-[#1D70B8] border border-blue-200',
     icon: '🚀',
     title: 'Startup Innovator',
     desc: 'Discover open government challenges, execute work orders, upload telemetry evidence, and earn portable PREP certification.',
     btn: 'bg-[#1D70B8] hover:bg-[#15568f]',
     image: startupTeamImg,
-    tag: 'BLUE PORTAL',
+    tag: 'STARTUP PORTAL',
     tagColor: 'bg-blue-100 text-blue-900 border-blue-200',
+    accentColor: '#1D70B8',
+  },
+  department: {
+    bg: 'border-orange-300 hover:border-orange-500',
+    iconBg: 'bg-white text-[#E05625] border border-orange-200',
+    icon: '🏛️',
+    title: 'Government Department',
+    desc: 'Post challenges, review pilot proposals, inspect independent evaluator audits, and enable scale-up procurement.',
+    btn: 'bg-[#E05625] hover:bg-[#c6471c]',
+    image: govtBuildingImg,
+    tag: 'GOVERNMENT PORTAL',
+    tagColor: 'bg-orange-100 text-orange-900 border-orange-200',
+    accentColor: '#E05625',
   },
   evaluator: {
-    bg: 'bg-[#EAF7ED] border-green-300',
+    bg: 'border-green-300 hover:border-green-500',
     iconBg: 'bg-white text-[#1E8549] border border-green-200',
     icon: '👥',
     title: 'Technical Evaluator',
     desc: 'Empanelled MSInS experts perform field audits, validate telemetry against benchmarks, and certify milestone completion.',
     btn: 'bg-[#1E8549] hover:bg-[#166738]',
     image: techAiImg,
-    tag: 'GREEN PORTAL',
+    tag: 'EVALUATOR PORTAL',
     tagColor: 'bg-green-100 text-green-900 border-green-200',
+    accentColor: '#1E8549',
   },
   admin: {
-    bg: 'bg-[#F3EBFB] border-purple-300',
+    bg: 'border-purple-300 hover:border-purple-500',
     iconBg: 'bg-white text-[#7C4DFF] border border-purple-200',
     icon: '🛡️',
     title: 'MSInS Nodal Authority',
     desc: 'State innovation secretariat issues standardized work orders, manages escrow disbursements, and publishes PREP Passports.',
     btn: 'bg-[#7C4DFF] hover:bg-[#6232d6]',
     image: procurementLegalImg,
-    tag: 'PURPLE PORTAL',
+    tag: 'MSINS PORTAL',
     tagColor: 'bg-purple-100 text-purple-900 border-purple-200',
+    accentColor: '#7C4DFF',
   },
 };
 
@@ -83,7 +87,7 @@ export default function RoleSelection() {
         </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {['department', 'startup', 'evaluator', 'admin'].map((roleKey) => {
+          {['startup', 'department', 'evaluator', 'admin'].map((roleKey) => {
             const config = roleCardConfigs[roleKey];
             return (
               <div
@@ -97,7 +101,7 @@ export default function RoleSelection() {
                     alt={config.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent flex items-end justify-between p-3">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent flex items-end justify-between p-3">
                     <span className={`text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded border ${config.tagColor}`}>
                       {config.tag}
                     </span>

@@ -346,7 +346,7 @@ export default function Landing() {
                     🚀
                   </div>
                   <span className="text-[10px] font-black uppercase tracking-wider bg-blue-100 text-blue-800 border border-blue-300 px-2.5 py-0.5 rounded-full">
-                    BLUE PORTAL
+                    STARTUP PORTAL
                   </span>
                 </div>
                 <h3 className="text-lg font-black text-navy-950">Startup Innovator</h3>
@@ -373,7 +373,7 @@ export default function Landing() {
                     🏛️
                   </div>
                   <span className="text-[10px] font-black uppercase tracking-wider bg-orange-100 text-orange-800 border border-orange-300 px-2.5 py-0.5 rounded-full">
-                    ORANGE PORTAL
+                    GOVERNMENT PORTAL
                   </span>
                 </div>
                 <h3 className="text-lg font-black text-navy-950">Government Department</h3>
@@ -400,7 +400,7 @@ export default function Landing() {
                     👥
                   </div>
                   <span className="text-[10px] font-black uppercase tracking-wider bg-green-100 text-green-800 border border-green-300 px-2.5 py-0.5 rounded-full">
-                    GREEN PORTAL
+                    EVALUATOR PORTAL
                   </span>
                 </div>
                 <h3 className="text-lg font-black text-navy-950">Technical Evaluator</h3>
@@ -427,7 +427,7 @@ export default function Landing() {
                     🛡️
                   </div>
                   <span className="text-[10px] font-black uppercase tracking-wider bg-purple-100 text-purple-800 border border-purple-300 px-2.5 py-0.5 rounded-full">
-                    PURPLE PORTAL
+                    MSINS PORTAL
                   </span>
                 </div>
                 <h3 className="text-lg font-black text-navy-950">MSInS Nodal Authority</h3>

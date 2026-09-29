@@ -21,187 +21,203 @@ const ROLE_IMAGES = {
   admin: procurementLegalImg,
 };
 
-// Role-specific welcome copy and operational metrics
-const ROLE_COPY = {
+// Role-specific welcome copy, operational metrics, and quotation overlays matching the visual reference
+const ROLE_CONFIGS = {
   startup: {
-    portalTitle: 'Your Pilot Journey & Milestone Execution',
-    welcome: (name) => `Welcome, ${name}`,
-    subtitle: 'Track your active pilot milestones, submit sensor telemetry evidence, and progress toward portable PREP certification.',
+    portalBadge: 'STARTUP PORTAL',
+    welcome: (name) => `Welcome, ${name || 'GreenGrid Technologies Pvt. Ltd.'}`,
+    subtitle: 'Turn your innovation into real-world impact through government pilots and procurement opportunities.',
     cta: 'Browse Open Problems & Challenges',
     ctaPath: '/work-order',
+    tagline: '“Innovate · Pilot · Prove · Scale”',
+    overviewTitle: 'Active Pilot',
+    overviewBadge: 'In Progress (Milestone 2/5)',
     cards: [
-      { icon: '📄', label: 'Applications Submitted', value: 2, sub: 'DPIIT Verified' },
-      { icon: '🚀', label: 'Active Pilot in Progress', value: 1, sub: 'Pune MC Ward 12 & 14' },
-      { icon: '🚩', label: 'Milestones Completed', value: 1, sub: 'Grant Released' },
-      { icon: '🛂', label: 'PREP Passports Earned', value: 0, sub: 'Pending Milestone 3-5' },
+      { id: '01', icon: '📄', count: '2', label: 'Applications', status: 'Submitted', sub: 'DPIIT Verified →', path: '/registration' },
+      { id: '02', icon: '🚀', count: '1', label: 'Active Pilot', status: 'In Progress', sub: 'View Details →', path: '/execution' },
+      { id: '03', icon: '🚩', count: '1', label: 'Milestones', status: 'Completed', sub: 'Track Progress →', path: '/execution' },
+      { id: '04', icon: '🛂', count: '0', label: 'PREP', status: 'Earned', sub: 'Generate PREP →', path: '/prep-generation' },
     ],
   },
   department: {
-    portalTitle: 'Government Pilot Oversight & Department Console',
-    welcome: (name) => `Welcome, ${name}`,
-    subtitle: 'Review incoming startup pilot proposals, inspect independent evaluator audit reports, and authorize milestone sign-offs.',
-    cta: 'Review 4-Party Pilot Proposals',
+    portalBadge: 'GOVERNMENT PORTAL',
+    welcome: (name) => `Welcome, ${name || 'Department of Urban Development'}`,
+    subtitle: 'Evaluate innovative solutions, monitor pilot execution, and enable faster procurement for proven solutions.',
+    cta: 'Review Startup Proposals',
     ctaPath: '/four-party-review',
+    tagline: '“Towards Efficient Transparent Procurement”',
+    overviewTitle: 'Department Pilots Overview',
+    overviewBadge: 'In Progress',
     cards: [
-      { icon: '📋', label: 'Pending Pilot Requests', value: 3, sub: 'Needs Department Review' },
-      { icon: '🔄', label: 'Active Field Pilots', value: 2, sub: 'IoT Telemetry Live' },
-      { icon: '✅', label: 'Approved Work Orders', value: 1, sub: 'Escrow Funded' },
-      { icon: '📦', label: 'PREP Reusable Solutions', value: 1, sub: 'Direct GeM Scale' },
+      { id: '01', icon: '📄', count: '5', label: 'Proposals', status: 'Received', sub: 'View Proposals →', path: '/four-party-review' },
+      { id: '02', icon: '🔄', count: '2', label: 'Active Department', status: 'Pilots', sub: 'Monitor →', path: '/execution' },
+      { id: '03', icon: '⏳', count: '1', label: 'Pending Dept.', status: 'Sign-off', sub: 'Take Action →', path: '/field-evaluation' },
+      { id: '04', icon: '📦', count: '3', label: 'Proven Solutions', status: 'for Scale', sub: 'View Reports →', path: '/completed-pilot' },
     ],
   },
   evaluator: {
-    portalTitle: 'Technical Evaluation & Telemetry Audit Console',
-    welcome: (name) => `Welcome, ${name}`,
-    subtitle: 'Perform on-site inspections, validate sensor data feeds against baseline benchmarks, and submit independent audit scorecards.',
-    cta: 'Conduct Milestone Field Evaluation',
+    portalBadge: 'EVALUATOR PORTAL',
+    welcome: (name) => `Welcome, ${name || 'Dr. Ananya Rao'}`,
+    subtitle: 'Conduct technical evaluations, validate milestone evidence, and ensure solution performance meets benchmarks.',
+    cta: 'View Assigned Pilots',
     ctaPath: '/field-evaluation',
+    tagline: '“Evaluate · Validate · Ensure Impact”',
+    overviewTitle: 'Assigned Pilots',
+    overviewBadge: 'Field Visit Scheduled',
     cards: [
-      { icon: '🔍', label: 'Pending Field Audits', value: 2, sub: 'Milestone 2 Inspection' },
-      { icon: '📊', label: 'Milestones Evaluated', value: 4, sub: 'Average Score: 92.4%' },
-      { icon: '✅', label: 'Validated Milestones', value: 3, sub: 'SLA Compliant' },
-      { icon: '⏳', label: 'Awaiting Startup Proofs', value: 1, sub: 'Sensor Telemetry' },
+      { id: '01', icon: '🔍', count: '2', label: 'Pending Field', status: 'Audits', sub: 'View Assignments →', path: '/field-evaluation' },
+      { id: '02', icon: '📊', count: '4', label: 'Milestones Evaluated', status: 'Avg. Score: 92.4%', sub: 'View Reports →', path: '/field-evaluation' },
+      { id: '03', icon: '✅', count: '3', label: 'Validated', status: 'Milestones', sub: 'View Details →', path: '/field-evaluation' },
+      { id: '04', icon: '⏳', count: '1', label: 'Awaiting Startup', status: 'Proofs', sub: 'Request Evidence →', path: '/evidence-submission' },
     ],
   },
   admin: {
-    portalTitle: 'MSInS Nodal Authority & Pilot Secretariat',
-    welcome: (name) => `Welcome, ${name}`,
-    subtitle: 'Issue standardized pilot work orders, oversee milestone escrow disbursements, and publish verified PREP Passports.',
+    portalBadge: 'MSINS PORTAL',
+    welcome: (name) => `Welcome, ${name || 'MSInS Nodal Secretariat'}`,
+    subtitle: 'Issue standardized pilot work orders, oversee milestone escrow disbursements, and publish verified PREP Passports for scale-up.',
     cta: 'Issue Standardized Work Order',
     ctaPath: '/work-order',
+    tagline: '“Standardize · Oversee · Scale · Enable Impact”',
+    overviewTitle: 'System-wide Pilot Pipeline',
+    overviewBadge: 'In Progress (Milestone 2/5)',
     cards: [
-      { icon: '📋', label: 'State-Wide Active Pilots', value: 5, sub: 'Across 4 Departments' },
-      { icon: '💳', label: 'Escrow Payments Pending', value: 2, sub: '₹25,00,000 Total' },
-      { icon: '🛂', label: 'PREP Passports Published', value: 1, sub: 'GeM Registered' },
-      { icon: '⚙️', label: 'Work Orders Published', value: 4, sub: 'Binding 4-Party SLAs' },
+      { id: '01', icon: '📋', count: '5', label: 'State-Wide', status: 'Active Pilots', sub: 'View Pilots →', path: '/execution' },
+      { id: '02', icon: '💳', count: '2', label: 'Escrow Payments', status: 'Pending (₹25L)', sub: 'Process →', path: '/approval-payment' },
+      { id: '03', icon: '🛂', count: '1', label: 'PREP Passports', status: 'Published', sub: 'View Passports →', path: '/completed-pilot' },
+      { id: '04', icon: '⚙️', count: '4', label: 'Work Orders', status: 'Published', sub: 'Manage →', path: '/work-order' },
     ],
   },
 };
 
 export default function StartupDashboard() {
   const { role, user } = useAuth();
-  const { pilot, stages } = usePilot();
+  const { pilot } = usePilot();
   const navigate = useNavigate();
   const theme = useRoleTheme(role);
 
   const activeRole = role || 'startup';
-  const copy = ROLE_COPY[activeRole] || ROLE_COPY.startup;
+  const config = ROLE_CONFIGS[activeRole] || ROLE_CONFIGS.startup;
   const bannerImage = ROLE_IMAGES[activeRole] || startupTeamImg;
   const notifications = notificationsByRole[activeRole] || notificationsByRole.startup || [];
-  const displayName = user?.name || currentStartup?.name || theme.welcomeName;
+  const displayName = user?.name || (activeRole === 'startup' ? currentStartup?.name : null);
 
   return (
-    <div className="min-h-screen bg-[#F4F6F8] flex flex-col font-sans">
+    <div className="min-h-screen bg-[#F8FAFC] flex flex-col font-sans">
       <Header variant="dashboard" />
       
       <div className="flex flex-1">
         <Sidebar />
         
-        <main className="flex-1 px-4 sm:px-6 lg:px-8 py-8 max-w-6xl">
+        <main className="flex-1 px-4 sm:px-6 lg:px-8 py-6 max-w-7xl mx-auto w-full">
 
-          {/* ── Top Role Banner with Contextual Photography ── */}
+          {/* ── Top Role Banner with Contextual Photography & Quotation ── */}
           <div
-            className="rounded-2xl p-6 sm:p-8 shadow-md flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden border-2"
-            style={{ backgroundColor: theme.accentLight, borderColor: theme.accentBorder }}
+            className={`rounded-2xl p-6 sm:p-8 shadow-sm flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden border-2 mb-6 ${theme.bannerBg}`}
           >
             <div className="z-10 max-w-xl">
               {/* Portal Identity Badge */}
               <div className="flex items-center gap-2 mb-3">
                 <span
-                  className="inline-flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full border shadow-sm"
-                  style={{ backgroundColor: 'white', borderColor: theme.accentBorder, color: theme.accent }}
+                  className="inline-flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full border shadow-xs bg-white"
+                  style={{ borderColor: theme.accentBorder, color: theme.accent }}
                 >
                   <span>{theme.icon}</span>
-                  <span>{theme.portalLabel}</span>
-                </span>
-                <span className="text-[11px] font-bold text-gray-500 uppercase tracking-wider">
-                  {copy.portalTitle}
+                  <span>{config.portalBadge}</span>
                 </span>
               </div>
 
-              <h1 className="text-2xl sm:text-3xl font-black text-navy-950 tracking-tight">
-                {copy.welcome(displayName)}
+              <h1 className="text-2xl sm:text-3xl font-black text-navy-950 tracking-tight leading-tight">
+                {config.welcome(displayName)}
               </h1>
               
-              <p className="text-xs sm:text-sm text-gray-700 mt-2.5 font-medium leading-relaxed">
-                {copy.subtitle}
+              <p className="text-xs sm:text-sm text-gray-700 mt-2 font-medium leading-relaxed">
+                {config.subtitle}
               </p>
 
               <div className="mt-5 flex items-center gap-3">
                 <Link
-                  to={copy.ctaPath}
+                  to={config.ctaPath}
                   className="text-white text-xs font-black px-6 py-3 rounded-xl shadow-md transition-all focus-ring flex items-center gap-2"
                   style={{ backgroundColor: theme.accent }}
                   onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = theme.accentDark)}
                   onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = theme.accent)}
                 >
-                  <span>{copy.cta}</span>
+                  <span>{config.cta}</span>
                   <span>→</span>
                 </Link>
               </div>
             </div>
 
-            {/* Contextual Role Image Frame */}
-            <div className="w-full md:w-80 h-40 sm:h-48 relative rounded-2xl overflow-hidden shrink-0 shadow-lg border-2 border-white bg-navy-950">
+            {/* Contextual Role Image Frame with Subtle Quotation */}
+            <div className="w-full md:w-80 h-44 sm:h-48 relative rounded-2xl overflow-hidden shrink-0 shadow-md border-2 border-white bg-navy-950 group">
               <img
                 src={bannerImage}
                 alt={`${theme.roleLabel} Visual`}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-3">
-                <span className="text-[10px] font-bold text-white uppercase tracking-wider">
-                  {theme.roleLabel} Verified Console
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent flex flex-col justify-end p-3.5">
+                <span className="text-[11px] font-bold text-white tracking-wide italic text-center drop-shadow-sm">
+                  {config.tagline}
                 </span>
               </div>
             </div>
           </div>
 
-          {/* ── 4 Strategic Metric Cards ── */}
-          <div className="mt-6 grid grid-cols-2 lg:grid-cols-4 gap-4">
-            {copy.cards.map((card, idx) => (
+          {/* ── 4 Solid Role-Themed KPI Cards (Matching Reference Screenshot) ── */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+            {config.cards.map((card) => (
               <div
-                key={idx}
-                className="bg-white border-2 border-gray-200/90 rounded-2xl p-5 shadow-sm hover:shadow-md hover:border-gray-400 transition-all flex flex-col justify-between"
+                key={card.id}
+                onClick={() => navigate(card.path)}
+                className="rounded-2xl p-5 shadow-sm text-white flex flex-col justify-between transition-all duration-200 hover:-translate-y-1 hover:shadow-lg cursor-pointer select-none group"
+                style={{ backgroundColor: theme.accent }}
               >
-                <div className="flex items-center justify-between">
-                  <div
-                    className="h-11 w-11 rounded-xl flex items-center justify-center text-xl shrink-0 border shadow-xs"
-                    style={{
-                      backgroundColor: theme.accentLight,
-                      borderColor: theme.accentBorder,
-                      color: theme.accent,
-                    }}
-                  >
-                    {card.icon}
+                <div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-2xl">{card.icon}</span>
+                    <span className="text-xs font-bold opacity-60 font-mono">{card.id}</span>
                   </div>
-                  <span className="text-[10px] font-bold text-gray-400 font-mono">0{idx + 1}</span>
+                  <div className="mt-3">
+                    <span className="text-3xl font-black block tracking-tight leading-none">
+                      {card.count}
+                    </span>
+                    <span className="text-xs font-bold block mt-1.5 leading-tight opacity-95">
+                      {card.label}
+                    </span>
+                    <span className="text-[11px] block opacity-80 font-medium">
+                      {card.status}
+                    </span>
+                  </div>
                 </div>
-                <div className="mt-3">
-                  <p className="text-2xl sm:text-3xl font-black text-navy-950">{card.value}</p>
-                  <p className="text-xs text-gray-800 font-extrabold leading-tight mt-0.5">{card.label}</p>
-                  <p className="text-[10px] text-gray-500 font-medium mt-1">{card.sub}</p>
+
+                <div className="mt-4 pt-2.5 border-t border-white/20 flex items-center justify-between text-[11px] font-bold">
+                  <span className="group-hover:translate-x-0.5 transition-transform">{card.sub}</span>
                 </div>
               </div>
             ))}
           </div>
 
-          {/* ── Active Pilot Operations Card ── */}
-          <div className="mt-6 bg-white border-2 border-navy-950/20 rounded-2xl shadow-md overflow-hidden">
-            <div className="px-6 py-4 bg-gray-50/80 border-b border-gray-200 flex flex-wrap items-center justify-between gap-3">
+          {/* ── Active Pilot Operations Card (PREP Quality Benchmark) ── */}
+          <div className="bg-white border-2 border-gray-200/90 rounded-2xl shadow-sm overflow-hidden mb-6">
+            <div className="px-6 py-4 bg-gray-50/70 border-b border-gray-200 flex flex-wrap items-center justify-between gap-3">
               <div className="flex items-center gap-2.5">
-                <span className="h-3 w-3 rounded-full bg-emerald-500 animate-pulse" />
-                <h2 className="font-black text-navy-950 text-base">Active Government Pilot</h2>
+                <span
+                  className="h-3 w-3 rounded-full animate-pulse shrink-0"
+                  style={{ backgroundColor: theme.accent }}
+                />
+                <h2 className="font-black text-navy-950 text-base">{config.overviewTitle}</h2>
               </div>
               <div className="flex items-center gap-2">
                 <Link
                   to="/execution"
-                  className="text-xs font-extrabold border px-4 py-1.5 rounded-lg flex items-center gap-1.5 transition-colors shadow-xs"
+                  className="text-xs font-black px-4 py-1.5 rounded-lg flex items-center gap-1.5 transition-colors border shadow-xs"
                   style={{
-                    color: theme.accent,
+                    color: theme.accentText,
                     borderColor: theme.accentBorder,
                     backgroundColor: theme.accentLight,
                   }}
                 >
-                  <span>Open Pilot Console</span>
+                  <span>View Details</span>
                   <span>→</span>
                 </Link>
               </div>
@@ -210,7 +226,7 @@ export default function StartupDashboard() {
             <div className="p-6">
               <div className="flex flex-wrap items-start justify-between gap-4">
                 <div>
-                  <div className="flex items-center gap-3">
+                  <div className="flex flex-wrap items-center gap-3">
                     <h3 className="font-black text-navy-950 text-lg">
                       {pilot?.name || 'Smart Waste Segregation System'}
                     </h3>
@@ -222,11 +238,11 @@ export default function StartupDashboard() {
                         borderColor: theme.accentBorder,
                       }}
                     >
-                      In Progress (Milestone 2/5)
+                      {config.overviewBadge}
                     </span>
                   </div>
                   <p className="text-xs text-gray-600 mt-1 font-bold">
-                    🏛️ {pilot?.department || 'Department of Urban Development, Maharashtra'}
+                    🏛️ Department of Urban Development · 🚀 GreenGrid Technologies Pvt. Ltd.
                   </p>
                 </div>
 
@@ -238,7 +254,7 @@ export default function StartupDashboard() {
                     </span>
                   </div>
                   <div>
-                    <span className="block text-[10px] text-gray-400 font-bold uppercase">Deployment Start</span>
+                    <span className="block text-[10px] text-gray-400 font-bold uppercase">Start Date</span>
                     <span className="font-bold text-gray-900">{pilot?.startDate || '12 Aug 2025'}</span>
                   </div>
                   <div>
@@ -252,7 +268,7 @@ export default function StartupDashboard() {
               <div className="mt-8 pt-5 border-t border-gray-100">
                 <div className="flex items-center justify-between mb-3">
                   <span className="text-xs font-black text-navy-950 uppercase tracking-wider">
-                    Sequential Pilot Progress Pipeline
+                    Sequential Pilot Governance Pipeline
                   </span>
                   <span className="text-[11px] font-bold text-gray-500">Stage 5 of 7 Active</span>
                 </div>
@@ -319,14 +335,14 @@ export default function StartupDashboard() {
                   <div className="flex items-center gap-2.5">
                     <span className="text-lg">🛂</span>
                     <p className="font-medium">
-                      <strong>PREP (Procurement Readiness Evidence Passport):</strong> Unlocks upon final milestone audit sign-off, enabling direct GeM scale-up.
+                      <strong>PREP (Procurement Readiness Evidence Passport):</strong> Portable credential generated upon final milestone completion for direct GeM scaling.
                     </p>
                   </div>
                   <Link
                     to="/completed-pilot"
                     className="font-bold text-[#D94F0B] hover:underline shrink-0 text-[11px]"
                   >
-                    Inspect PREP Format →
+                    Inspect PREP Passport →
                   </Link>
                 </div>
               </div>
@@ -339,7 +355,7 @@ export default function StartupDashboard() {
           </div>
 
           {/* ── Operational Notifications ── */}
-          <div className="mt-8 bg-white border border-gray-200 rounded-2xl shadow-card overflow-hidden">
+          <div className="bg-white border-2 border-gray-200/90 rounded-2xl shadow-sm overflow-hidden">
             <div className="px-6 py-4 bg-gray-50/50 border-b border-gray-100 flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <span className="text-sm">🔔</span>

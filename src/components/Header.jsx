@@ -40,7 +40,7 @@ export default function Header({ variant = 'public', showHomeLink = false, backT
                   />
                 </button>
                 
-                {/* Role Pill in Top Bar */}
+                {/* Role Avatar & Pill in Top Bar */}
                 <div
                   className="flex items-center gap-2 px-3 py-1 rounded-full border shadow-xs"
                   style={{
@@ -135,7 +135,7 @@ export default function Header({ variant = 'public', showHomeLink = false, backT
             {variant === 'dashboard' && (
               <div className="flex items-center gap-3 text-xs">
                 <div className="flex items-center gap-2 border-r border-gray-200 pr-3">
-                  <span className="text-gray-400 font-bold text-[11px]">Switch Portal:</span>
+                  <span className="text-gray-400 font-bold text-[11px]">Switch Role:</span>
                   <select
                     value={role}
                     onChange={(e) => handleRoleChange(e.target.value)}
@@ -146,10 +146,10 @@ export default function Header({ variant = 'public', showHomeLink = false, backT
                       color: theme.accentText,
                     }}
                   >
-                    <option value="startup">🚀 Startup Innovator (Blue)</option>
-                    <option value="department">🏛️ Govt Department (Orange)</option>
-                    <option value="evaluator">👥 Technical Evaluator (Green)</option>
-                    <option value="admin">🛡️ MSInS Authority (Purple)</option>
+                    <option value="startup">🚀 Startup Innovator</option>
+                    <option value="department">🏛️ Government Department</option>
+                    <option value="evaluator">👥 Technical Evaluator</option>
+                    <option value="admin">🛡️ MSInS Nodal Authority</option>
                   </select>
                 </div>
                 
