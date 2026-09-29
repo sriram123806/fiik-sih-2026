@@ -1,17 +1,23 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import Header from '../components/Header';
-import Sidebar from '../components/Sidebar';
-import PilotSummaryBar from '../components/PilotSummaryBar';
+import {
+  FiikPageShell,
+  FiikHero,
+  FiikDocumentCard,
+  FiikDarkPanel,
+  FiikRoleNotice,
+  FiikStatusBadge,
+} from '../components/FiikDesignSystem';
 import StepTracker from '../components/StepTracker';
-import { Card, SectionHeading, Field } from '../components/Primitives';
-import StatusBadge from '../components/StatusBadge';
+import { Field } from '../components/Primitives';
 import { useAuth } from '../context/AuthContext';
 import { usePilot } from '../context/PilotContext';
+import { useRoleTheme } from '../utils/roleTheme';
 import { paymentDetails, paymentHistory } from '../data/mockData';
 
 export default function ApprovalPayment() {
   const { role } = useAuth();
+  const theme = useRoleTheme(role);
   const { pilot, fourPartyReview, completeAllMilestones } = usePilot();
   const navigate = useNavigate();
 
@@ -26,146 +32,169 @@ export default function ApprovalPayment() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
-      <Header variant="dashboard" backTo="/execution" />
-      <div className="flex flex-1">
-        <Sidebar />
-        <main className="flex-1 p-8 max-w-5xl">
-          <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
-            <div>
-              <h1 className="text-xl font-extrabold text-navy-950">
-                Milestone Approval &amp; Payment Processing
-              </h1>
-              <p className="text-xs text-gray-500 mt-0.5">
-                Track approval status from all stakeholders and finance grant disbursement.
-              </p>
+    <FiikPageShell backTo="/execution">
+      {/* ── Level 1 Hero Banner ── */}
+      <FiikHero
+        tag="ESCROW DISBURSEMENT &amp; TREASURY INTEGRATION"
+        verifiedLabel="PFMS Escrow Verification Passed"
+        title="Milestone Approval &amp; Escrow Payment Processing"
+        subtitle="Multi-party milestone sign-offs trigger automated escrow fund release and authorize transition into PREP Passport issuance."
+        pipelineStep={4}
+        rightSlot={
+          <div className="bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/20 text-right">
+            <span className="text-[10px] font-black uppercase tracking-widest text-amber-300 block">
+              DISBURSEMENT AMOUNT
+            </span>
+            <span className="text-2xl font-black text-emerald-300 block mt-0.5">
+              ₹ 5,00,000
+            </span>
+            <span className="text-[10px] text-gray-300 font-bold block mt-0.5">
+              Milestone 02 Grant Escrow
+            </span>
+          </div>
+        }
+      />
+
+      {/* ── Role Governance Notice ── */}
+      <FiikRoleNotice
+        title={`FINANCIAL DISBURSEMENT PERMISSION · ${theme.roleLabel.toUpperCase()}`}
+      >
+        {isStartup && 'Startup Action: Track milestone 2 verification approval and invoice payment release.'}
+        {isDept && 'Government Dept Action: Confirm municipal satisfaction to release finance disbursement.'}
+        {isEvaluator && 'Evaluator View: Technical audit recommendation sign-off recorded for Milestone 2.'}
+        {isAdmin && 'MSInS Nodal Authority: Authorize escrow release and trigger official PREP Passport generation.'}
+      </FiikRoleNotice>
+
+      {/* ── Level 3 Document Card: Four-Party Sign-off Matrix ── */}
+      <FiikDocumentCard
+        title="Four-Party Milestone Sign-off Matrix"
+        subtitle="All stakeholders must validate deliverables before milestone payment release."
+        index={1}
+        icon="⚖️"
+      >
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+          {fourPartyReview.map((p) => (
+            <div
+              key={p.party}
+              className="border-2 border-gray-200/90 rounded-2xl p-4 bg-gray-50/50 flex flex-col justify-between gap-2"
+            >
+              <div>
+                <span className="text-xs font-black text-[#071A3D] block">{p.party}</span>
+                <span className="text-[10px] text-gray-400 mt-0.5 block font-medium">{p.date || p.detail}</span>
+              </div>
+              <FiikStatusBadge status={p.status} tone={p.state} />
             </div>
-            <StatusBadge status="PAYMENT_PROCESSING" label="Payment Processing" />
-          </div>
+          ))}
+        </div>
 
-          <PilotSummaryBar pilot={pilot} badge={{ label: 'Milestone 2 Approved', tone: 'green' }} />
+        <div className="pt-6 border-t border-gray-100">
+          <span className="text-xs font-black text-[#071A3D] uppercase tracking-wider block mb-4">
+            Approval &amp; Payment Processing Pipeline
+          </span>
+          <StepTracker
+            steps={[
+              { label: 'Evidence Submitted', meta: '08 Oct 2025', state: 'done' },
+              { label: 'Evaluator Review', meta: '09 Oct 2025', state: 'done' },
+              { label: 'Department Approval', meta: '10 Oct 2025', state: 'done' },
+              { label: 'Finance Processing', meta: 'In Progress', state: 'current' },
+              { label: 'Payment Release', meta: 'Pending', state: 'pending' },
+            ]}
+          />
+        </div>
+      </FiikDocumentCard>
 
-          {/* Role Governance Banner */}
-          <div className="bg-white border border-gray-200 rounded-xl p-4 shadow-sm mb-6 text-xs text-gray-600">
-            <span className="font-bold text-navy-950 block uppercase tracking-wider">PAYMENT ROLE PERMISSION: {(role || 'N/A').toUpperCase()}</span>
-            <p className="mt-0.5">
-              {isStartup && 'Startup Action: Track milestone 2 approval and submit invoice/payment release request.'}
-              {isDept && 'Government Dept Action: Confirm department milestone approval for finance disbursement.'}
-              {isEvaluator && 'Evaluator View: Technical recommendation sign-off recorded for Milestone 2.'}
-              {isAdmin && 'MSInS / Finance Authority Action: Process grant disbursement and release payment to generate PREP.'}
-            </p>
-          </div>
+      {/* ── Level 3 Document Card: Payment Details ── */}
+      <FiikDocumentCard
+        title="Grant Disbursement Parameters"
+        subtitle="Escrow transaction metadata and PFMS treasury reference."
+        index={2}
+        icon="💳"
+      >
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs">
+          <Field label="Approved Amount" value={paymentDetails?.approvedAmount || '₹ 5,00,000'} />
+          <Field label="Active Milestone" value="Milestone 2 of 5" />
+          <Field label="Disbursement Mode" value={paymentDetails?.paymentType || 'PFMS / State Escrow'} />
+          <Field label="Expected Release Date" value={paymentDetails?.expectedReleaseDate || '12 Oct 2025'} />
+        </div>
+      </FiikDocumentCard>
 
-          {/* Four-Party Approval Status */}
-          <Card className="mb-6">
-            <SectionHeading index={1} title="Four-Party Approval Status" />
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
-              {fourPartyReview.map((p) => (
-                <div key={p.party} className="border border-gray-200 rounded-lg p-3.5 flex flex-col gap-1.5 bg-gray-50/50">
-                  <span className="text-xs font-bold text-navy-950">{p.party}</span>
-                  <StatusBadge status={p.status} tone={p.state} />
-                  <span className="text-[10px] text-gray-400 mt-1">{p.date || p.detail}</span>
+      {/* ── Level 3 Document Card: Payment History Ledger ── */}
+      <FiikDocumentCard
+        title="Escrow Disbursement History Ledger"
+        subtitle="Audited financial transactions logged to state registry."
+        index={3}
+        icon="📜"
+      >
+        <div className="space-y-3">
+          {paymentHistory.map((h) => (
+            <div
+              key={h.label}
+              className="p-4 rounded-xl border-2 border-gray-200/90 bg-gray-50/50 flex flex-wrap items-center justify-between gap-4"
+            >
+              <div className="flex items-center gap-3.5">
+                <span className="h-8 w-8 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center font-black text-sm">
+                  ✓
+                </span>
+                <div>
+                  <p className="font-black text-sm text-[#071A3D]">{h.label}</p>
+                  <p className="text-xs text-gray-500 mt-0.5 font-medium">{h.date}</p>
                 </div>
-              ))}
+              </div>
+
+              <div className="flex items-center gap-3">
+                <span className="font-black text-sm text-emerald-700">{h.amount}</span>
+                <span className="text-[10px] font-black uppercase text-emerald-800 bg-emerald-100 px-3 py-1 rounded-full border border-emerald-300">
+                  Released ✓
+                </span>
+              </div>
             </div>
+          ))}
+        </div>
 
-            <div className="pt-4 border-t border-gray-100">
-              <span className="text-[11px] font-bold text-gray-400 uppercase tracking-wide block mb-3">
-                Approval &amp; Payment Timeline
-              </span>
-              <StepTracker
-                steps={[
-                  { label: 'Evidence Submitted', meta: '08 Oct 2025', state: 'done' },
-                  { label: 'Evaluator Review', meta: '09 Oct 2025', state: 'done' },
-                  { label: 'Department Approval', meta: '10 Oct 2025', state: 'done' },
-                  { label: 'Finance Processing', meta: 'In Progress', state: 'current' },
-                  { label: 'Payment Release', meta: 'Pending', state: 'pending' },
-                ]}
-              />
-            </div>
-          </Card>
+        {/* Footer Actions */}
+        <div className="mt-8 pt-5 border-t border-gray-100 flex flex-wrap items-center justify-between gap-4">
+          <p className="text-xs text-gray-500 max-w-lg leading-relaxed font-medium">
+            FIIK records milestone approval status from authorized finance workflows. Real funds release occurs through state PFMS integrations.
+          </p>
 
-          {/* Payment Details */}
-          <Card className="mb-6">
-            <SectionHeading index={2} title="Payment &amp; Grant Details" />
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs">
-              <Field label="Approved Amount" value={paymentDetails?.approvedAmount || 'N/A'} />
-              <Field label="Milestone" value="Milestone 2 of 5" />
-              <Field label="Disbursement Type" value={paymentDetails?.paymentType || 'N/A'} />
-              <Field label="Expected Release Date" value={paymentDetails?.expectedReleaseDate || 'N/A'} />
-            </div>
-          </Card>
+          {isAdmin && (
+            <button
+              onClick={handleCompleteAndProceed}
+              className="px-6 py-2.5 rounded-xl font-black text-xs text-white bg-purple-800 hover:bg-purple-900 shadow-md transition-all ml-auto"
+            >
+              Release Payment &amp; Generate PREP Passport →
+            </button>
+          )}
 
-          {/* Payment History */}
-          <Card className="mb-6">
-            <SectionHeading index={3} title="Payment History" />
-            <div className="divide-y divide-gray-100">
-              {paymentHistory.map((h) => (
-                <div key={h.label} className="py-3 flex items-center justify-between text-xs">
-                  <div className="flex items-center gap-3">
-                    <span className="h-7 w-7 rounded-full bg-green-100 text-green-700 flex items-center justify-center font-bold">
-                      ✓
-                    </span>
-                    <div>
-                      <p className="font-bold text-navy-950">{h.label}</p>
-                      <p className="text-[11px] text-gray-400">{h.date}</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <span className="font-bold text-navy-950 text-sm">{h.amount}</span>
-                    <span className="text-[10px] font-bold text-green-700 bg-green-50 px-2 py-0.5 rounded border border-green-200">
-                      Released
-                    </span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </Card>
+          {isDept && (
+            <button
+              onClick={handleCompleteAndProceed}
+              className="px-6 py-2.5 rounded-xl font-black text-xs text-white bg-orange-600 hover:bg-orange-700 shadow-md transition-all ml-auto"
+            >
+              Confirm Department Payment Authorization →
+            </button>
+          )}
 
-          {/* Disclaimer & Action */}
-          <div className="flex flex-wrap items-center justify-between gap-4 bg-gray-50 border border-gray-200 rounded-xl p-4">
-            <p className="text-[11px] text-gray-400 max-w-lg leading-tight">
-              Prototype simulation: FIIK records and displays payment approval status from authorized finance workflows. Real government funds release occurs through PFMS/State Treasury integrations.
-            </p>
+          {isStartup && (
+            <button
+              onClick={handleCompleteAndProceed}
+              className="px-6 py-2.5 rounded-xl font-black text-xs text-white shadow-md transition-all ml-auto"
+              style={{ backgroundColor: theme.accent }}
+            >
+              Submit Payment Request &amp; Track PREP →
+            </button>
+          )}
 
-            {isAdmin && (
-              <button
-                onClick={handleCompleteAndProceed}
-                className="btn btn-primary text-xs bg-purple-800 hover:bg-purple-900"
-              >
-                Release Payment &amp; Generate PREP Passport →
-              </button>
-            )}
-
-            {isDept && (
-              <button
-                onClick={handleCompleteAndProceed}
-                className="btn btn-primary text-xs bg-fiik-orange hover:bg-fiik-orangeDark"
-              >
-                Confirm Department Payment Authorization →
-              </button>
-            )}
-
-            {isStartup && (
-              <button
-                onClick={handleCompleteAndProceed}
-                className="btn btn-primary text-xs bg-fiik-orange hover:bg-fiik-orangeDark"
-              >
-                Submit Payment Request &amp; Track PREP →
-              </button>
-            )}
-
-            {isEvaluator && (
-              <button
-                onClick={() => navigate('/completed-pilot')}
-                className="btn btn-secondary text-xs"
-              >
-                View PREP Record Registry →
-              </button>
-            )}
-          </div>
-        </main>
-      </div>
-    </div>
+          {isEvaluator && (
+            <button
+              onClick={() => navigate('/completed-pilot')}
+              className="px-6 py-2.5 rounded-xl font-black text-xs text-white bg-emerald-600 hover:bg-emerald-700 shadow-md transition-all ml-auto"
+            >
+              View PREP Record Registry →
+            </button>
+          )}
+        </div>
+      </FiikDocumentCard>
+    </FiikPageShell>
   );
 }

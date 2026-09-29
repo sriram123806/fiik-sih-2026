@@ -1,16 +1,22 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Header from '../components/Header';
-import Sidebar from '../components/Sidebar';
-import StatusBadge from '../components/StatusBadge';
+import {
+  FiikPageShell,
+  FiikHero,
+  FiikDocumentCard,
+  FiikRoleNotice,
+  FiikStatusBadge,
+} from '../components/FiikDesignSystem';
 import { useAuth } from '../context/AuthContext';
 import { usePilot } from '../context/PilotContext';
+import { useRoleTheme } from '../utils/roleTheme';
 import { fileTypeIcons } from '../data/mockData';
 
 const SUPPORTED_TYPES = ['PDF', 'DOC', 'XLS/XLSX', 'JPG', 'PNG', 'MP4', 'ZIP'];
 
 export default function EvidenceSubmission() {
   const { role } = useAuth();
+  const theme = useRoleTheme(role);
   const { evidence, addEvidence, milestones } = usePilot();
   const [remarks, setRemarks] = useState('');
   const [submitted, setSubmitted] = useState(false);
@@ -27,9 +33,9 @@ export default function EvidenceSubmission() {
     const safeEvidence = Array.isArray(evidence) ? evidence : [];
     const nextId = safeEvidence.length > 0 ? Math.max(...safeEvidence.map((f) => f.id || 0)) + 1 : 1;
     addEvidence({
-      name: `Performance_Report_M2_Addon_${nextId}.pdf`,
+      name: `Performance_Telemetry_Report_M2_${nextId}.pdf`,
       type: 'PDF',
-      size: '2.4 MB',
+      size: '2.8 MB',
       uploaded: 'Just now',
       status: 'Uploaded',
     });
@@ -44,131 +50,162 @@ export default function EvidenceSubmission() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
-      <Header variant="dashboard" backTo="/execution" />
-      <div className="flex flex-1">
-        <Sidebar />
-        <main className="flex-1 p-8 max-w-5xl">
-          <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
-            <div>
-              <h1 className="text-xl font-extrabold text-navy-950">
-                Submit Evidence — Milestone {activeMilestone?.id || 'N/A'}
-              </h1>
-              <p className="text-xs text-gray-500 mt-0.5">{activeMilestone?.name || 'N/A'}</p>
-            </div>
-            <StatusBadge status={activeMilestone?.status || 'N/A'} />
+    <FiikPageShell backTo="/execution">
+      {/* ── Level 1 Hero Banner ── */}
+      <FiikHero
+        tag="IMMUTABLE EVIDENCE REPOSITORY"
+        verifiedLabel="Cryptographic Timestamp Active"
+        title={`Evidence Submission — Milestone 0${activeMilestone?.id || '2'}`}
+        subtitle={`${activeMilestone?.name || 'Initial Performance Evaluation'}: Upload verifiable telemetry logs, geotagged deployment photos, and sensor datasets for evaluator audit.`}
+        pipelineStep={3}
+        rightSlot={
+          <div className="bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/20 text-right">
+            <span className="text-[10px] font-black uppercase tracking-widest text-amber-300 block">
+              DUE DATE
+            </span>
+            <span className="text-xl font-black text-white block mt-0.5">
+              {activeMilestone?.dueDate || '10 Oct 2025'}
+            </span>
+            <span className="text-[10px] text-emerald-300 font-bold block mt-0.5">
+              ✓ On-Track Execution
+            </span>
           </div>
+        }
+      />
 
-          {/* RBAC Restriction Notice if not startup */}
-          {!isStartup && (
-            <div className="bg-amber-50 border border-amber-200 text-amber-900 rounded-xl p-4 mb-6 text-xs flex flex-wrap items-center justify-between gap-3">
-              <div>
-                <strong className="block uppercase tracking-wider text-amber-800">ROLE NOTICE: EVIDENCE UPLOAD IS RESTRICTED TO STARTUPS</strong>
-                <p className="text-gray-600 mt-0.5">As a {(role || 'N/A').toUpperCase()}, you are viewing submitted evidence in read-only mode. Use Field Evaluation to audit evidence.</p>
-              </div>
-              <button
-                onClick={() => navigate('/field-evaluation')}
-                className="btn btn-primary text-xs bg-fiik-orange hover:bg-fiik-orangeDark"
-              >
-                Go to Field Evaluation →
-              </button>
-            </div>
-          )}
+      {/* ── Role Governance Notice ── */}
+      <FiikRoleNotice
+        title={`EVIDENCE REPOSITORY ROLE · ${theme.roleLabel.toUpperCase()}`}
+        action={
+          !isStartup && (
+            <button
+              onClick={() => navigate('/field-evaluation')}
+              className="px-4 py-2 rounded-xl text-xs font-black text-white shadow-xs"
+              style={{ backgroundColor: theme.accent }}
+            >
+              Go to Field Evaluation Audit →
+            </button>
+          )
+        }
+      >
+        {isStartup
+          ? 'You are authorized to upload raw telemetry files, field photographs, and test results. Each submission is timestamped and locked upon evaluator audit.'
+          : `As a ${theme.roleLabel}, you are viewing submitted evidence in read-only audit mode. Use the Field Evaluation interface to verify items.`}
+      </FiikRoleNotice>
 
-          {/* Milestone Info */}
-          <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-card mb-6 space-y-2 text-xs">
-            <div className="flex justify-between border-b border-gray-100 pb-2">
-              <span className="text-gray-500">Milestone:</span>
-              <strong className="text-navy-950">{activeMilestone?.name || 'N/A'}</strong>
-            </div>
-            <div className="flex justify-between border-b border-gray-100 pb-2">
-              <span className="text-gray-500">Description:</span>
-              <span className="text-gray-700">{activeMilestone?.description || 'N/A'}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-gray-500">Due Date:</span>
-              <strong className="text-navy-950">{activeMilestone.dueDate || '10 Oct 2025'}</strong>
-            </div>
-          </div>
+      {/* ── Level 3 Document Card: Upload Zone (For Startup) ── */}
+      {isStartup && (
+        <FiikDocumentCard
+          title="Upload Milestone Evidentiary Deliverables"
+          subtitle="Support documents must include verifiable device telemetry, field logs, or department verification receipts."
+          icon="📤"
+          index={1}
+        >
+          <div className="border-2 border-dashed border-gray-300 rounded-2xl p-8 sm:p-10 text-center bg-gray-50/60 hover:bg-gray-50 hover:border-navy-900 transition-all">
+            <span className="text-4xl block mb-2">📁</span>
+            <p className="text-sm font-black text-[#071A3D]">
+              Drag &amp; drop evidence files here, or choose from your computer
+            </p>
+            <p className="text-xs text-gray-500 mt-1 font-medium">
+              Upload PDF reports, raw sensor CSV/XLS, geotagged photos (JPG/PNG), or field demo videos
+            </p>
 
-          {/* Upload Zone (Enabled ONLY for Startup) */}
-          {isStartup && (
-            <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-card mb-6">
-              <h3 className="text-sm font-bold text-navy-950 mb-4 pb-2 border-b border-gray-100">
-                Upload Evidence Files (Startup Action)
-              </h3>
-              <div className="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center bg-gray-50/50">
-                <span className="text-3xl block mb-2">📤</span>
-                <p className="text-xs font-bold text-navy-950">Drag &amp; drop files here, or click to browse</p>
-                <p className="text-[11px] text-gray-400 mt-1">Upload clear, verifiable photos, videos, reports or datasets</p>
-
-                <div className="flex flex-wrap justify-center gap-1.5 mt-3">
-                  {SUPPORTED_TYPES.map((t) => (
-                    <span key={t} className="text-[10px] font-semibold bg-gray-200 text-gray-600 px-2 py-0.5 rounded">
-                      {t}
-                    </span>
-                  ))}
-                </div>
-
-                <button onClick={handleMockUpload} type="button" className="btn btn-primary text-xs mt-4">
-                  Choose Files to Upload
-                </button>
-              </div>
-            </div>
-          )}
-
-          {/* Uploaded Evidence Files List */}
-          <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-card mb-6">
-            <h3 className="text-sm font-bold text-navy-950 mb-4 pb-2 border-b border-gray-100">
-              Submitted Milestone Evidence Files ({evidence.length})
-            </h3>
-            <div className="divide-y divide-gray-100">
-              {evidence.map((f) => (
-                <div key={f.id} className="py-3 flex items-center justify-between text-xs">
-                  <div className="flex items-center gap-3">
-                    <span className="text-xl">{fileTypeIcons[f.type] || '📄'}</span>
-                    <div>
-                      <p className="font-bold text-navy-950">{f.name}</p>
-                      <p className="text-[11px] text-gray-400">
-                        {f.type} · {f.size} · Uploaded {f.uploaded}
-                      </p>
-                    </div>
-                  </div>
-                  <StatusBadge status={f.status || 'Uploaded'} color="blue" />
-                </div>
+            <div className="flex flex-wrap justify-center gap-2 mt-4">
+              {SUPPORTED_TYPES.map((t) => (
+                <span
+                  key={t}
+                  className="text-[10px] font-black uppercase tracking-wider bg-white border border-gray-300 text-gray-700 px-2.5 py-1 rounded-lg shadow-2xs"
+                >
+                  {t}
+                </span>
               ))}
             </div>
 
-            {isStartup && (
-              <div className="mt-6 pt-4 border-t border-gray-100">
-                <label className="block text-xs font-bold text-navy-950 mb-1">Startup Submission Remarks</label>
-                <textarea
-                  value={remarks}
-                  onChange={(e) => setRemarks(e.target.value)}
-                  placeholder="Add context or notes for the department/evaluator..."
-                  rows={3}
-                  className="w-full border border-gray-300 rounded-md p-3 text-xs focus-ring"
-                />
-              </div>
-            )}
+            <button
+              onClick={handleMockUpload}
+              type="button"
+              className="mt-6 px-6 py-2.5 rounded-xl font-black text-xs text-white shadow-md transition-all cursor-pointer"
+              style={{ backgroundColor: theme.accent }}
+            >
+              + Select Files to Upload
+            </button>
           </div>
+        </FiikDocumentCard>
+      )}
 
-          {/* Action Bar */}
-          {isStartup && (
-            <div className="flex items-center justify-between">
-              <button onClick={() => navigate('/execution')} className="btn btn-secondary text-xs">
-                Save Draft
-              </button>
-              <button
-                onClick={handleSubmitEvidence}
-                className={`btn btn-primary text-xs ${submitted ? 'bg-green-600' : ''}`}
-              >
-                {submitted ? 'Evidence Submitted! Redirecting to Evaluation...' : 'Submit Evidence for Evaluator Audit →'}
-              </button>
+      {/* ── Level 3 Document Card: Submitted Evidence Ledger ── */}
+      <FiikDocumentCard
+        title={`Submitted Milestone Evidence Files (${evidence.length})`}
+        subtitle="Cryptographically verified file ledger ready for Technical Evaluator examination."
+        icon="🗂️"
+        index={2}
+      >
+        <div className="space-y-3">
+          {evidence.map((f) => (
+            <div
+              key={f.id}
+              className="p-4 rounded-xl border-2 border-gray-200/90 bg-gray-50/50 flex flex-wrap items-center justify-between gap-4 hover:border-gray-300 transition-all"
+            >
+              <div className="flex items-center gap-3.5">
+                <span className="text-2xl p-2 rounded-xl bg-white border border-gray-200 shadow-2xs">
+                  {fileTypeIcons[f.type] || '📄'}
+                </span>
+                <div>
+                  <p className="font-black text-sm text-[#071A3D]">{f.name}</p>
+                  <p className="text-xs text-gray-500 mt-0.5 font-medium">
+                    {f.type} · {f.size} · Uploaded <strong className="text-gray-700">{f.uploaded}</strong>
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <FiikStatusBadge status={f.status || 'Uploaded'} tone="blue" />
+                <button
+                  type="button"
+                  className="text-xs font-bold text-[#071A3D] hover:underline px-2 py-1"
+                >
+                  Preview File ↗
+                </button>
+              </div>
             </div>
-          )}
-        </main>
-      </div>
-    </div>
+          ))}
+        </div>
+
+        {isStartup && (
+          <div className="mt-6 pt-5 border-t border-gray-100">
+            <label className="block text-xs font-black text-[#071A3D] uppercase tracking-wider mb-2">
+              Startup Submission Notes &amp; Methodology Remarks
+            </label>
+            <textarea
+              value={remarks}
+              onChange={(e) => setRemarks(e.target.value)}
+              placeholder="Provide context regarding hardware calibration, ward sampling methodology, or telemetry server logs..."
+              rows={3}
+              className="w-full border-2 border-gray-300 rounded-xl p-3.5 text-sm font-semibold text-gray-900 focus:outline-none focus:border-[#071A3D] focus:ring-2 focus:ring-[#071A3D]/20 bg-white"
+            />
+          </div>
+        )}
+
+        {/* Action Buttons */}
+        {isStartup && (
+          <div className="mt-8 pt-5 border-t border-gray-100 flex flex-wrap items-center justify-between gap-4">
+            <button
+              onClick={() => navigate('/execution')}
+              className="px-5 py-2.5 rounded-xl border-2 border-gray-300 font-bold text-xs text-gray-700 hover:bg-gray-50 transition-colors"
+            >
+              Save Draft
+            </button>
+            <button
+              onClick={handleSubmitEvidence}
+              className={`px-6 py-2.5 rounded-xl font-black text-xs text-white shadow-md transition-all cursor-pointer ${
+                submitted ? 'bg-emerald-600' : 'bg-[#071A3D] hover:bg-black'
+              }`}
+            >
+              {submitted ? '✓ Evidence Submitted! Redirecting...' : 'Submit Evidence for Evaluator Audit →'}
+            </button>
+          </div>
+        )}
+      </FiikDocumentCard>
+    </FiikPageShell>
   );
 }

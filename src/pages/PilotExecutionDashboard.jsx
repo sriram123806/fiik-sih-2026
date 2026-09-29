@@ -1,14 +1,21 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import Header from '../components/Header';
-import Sidebar from '../components/Sidebar';
-import StatusBadge from '../components/StatusBadge';
+import {
+  FiikPageShell,
+  FiikHero,
+  FiikDocumentCard,
+  FiikDarkPanel,
+  FiikRoleNotice,
+  FiikStatusBadge,
+} from '../components/FiikDesignSystem';
 import PilotSummaryBar from '../components/PilotSummaryBar';
 import { useAuth } from '../context/AuthContext';
 import { usePilot } from '../context/PilotContext';
+import { useRoleTheme } from '../utils/roleTheme';
 
 export default function PilotExecutionDashboard() {
   const { role } = useAuth();
+  const theme = useRoleTheme(role);
   const { pilot, stages, milestones } = usePilot();
   const navigate = useNavigate();
 
@@ -18,100 +25,133 @@ export default function PilotExecutionDashboard() {
   const isAdmin = role === 'admin';
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
-      <Header variant="dashboard" backTo="/dashboard" />
-      <div className="flex flex-1">
-        <Sidebar />
-        <main className="flex-1 p-8 max-w-5xl">
-          <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
-            <div>
-              <h1 className="text-xl font-extrabold text-navy-950">Pilot &amp; Milestone Execution</h1>
-              <p className="text-xs text-gray-500 mt-0.5">
-                {isStartup ? 'Track milestone progress and submit evidence for evaluator review.' : 'Monitor active pilot execution and milestone deliverables.'}
-              </p>
-            </div>
-            {(isEvaluator || isDept || isAdmin) && (
-              <Link to="/field-evaluation" className="text-xs font-semibold text-fiik-blue hover:underline">
-                View Evaluator &amp; Field Audit Interface →
-              </Link>
-            )}
+    <FiikPageShell backTo="/dashboard">
+      {/* ── Level 1 Hero Banner ── */}
+      <FiikHero
+        tag="PILOT EXECUTION &amp; TELEMETRY CONTROL"
+        verifiedLabel="Live Telemetry Monitoring Active"
+        title="Pilot Execution &amp; Milestone Work Plan"
+        subtitle={
+          isStartup
+            ? 'Execute assigned deployment milestones, monitor IoT edge sensors, and submit verifiable evidence for technical audit.'
+            : 'Operational monitoring of active municipal pilot execution, milestone deliverables, and evaluator field audits.'
+        }
+        pipelineStep={3}
+        rightSlot={
+          <div className="bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/20 text-right">
+            <span className="text-[10px] font-black uppercase tracking-widest text-amber-300 block">
+              EXECUTION STATUS
+            </span>
+            <span className="text-xl font-black text-amber-300 block mt-0.5">
+              Milestone 2 of 5
+            </span>
+            <span className="text-[10px] text-gray-300 font-bold block mt-0.5">
+              Target Completion: 15 Feb 2026
+            </span>
           </div>
+        }
+      />
 
-          <PilotSummaryBar pilot={pilot} badge={{ label: pilot.statusLabel || 'In Execution', tone: 'amber' }} />
+      {/* ── Role Governance Notice ── */}
+      <FiikRoleNotice
+        title={`EXECUTION ROLE PERMISSION · ${theme.roleLabel.toUpperCase()}`}
+        action={
+          (isEvaluator || isDept || isAdmin) && (
+            <Link
+              to="/field-evaluation"
+              className="px-4 py-2 rounded-xl text-xs font-black text-white shadow-xs"
+              style={{ backgroundColor: theme.accent }}
+            >
+              Open Technical Field Audit Interface →
+            </Link>
+          )
+        }
+      >
+        {isStartup && 'You are authorized to deploy field units, upload evidentiary reports, and log live telemetry for evaluator review.'}
+        {isDept && 'Department Officer View: Monitor milestone deliverable completion and municipal performance metrics in real time.'}
+        {isEvaluator && 'Technical Evaluator Mode: Audit submitted sensor data, verify field deployments, and conduct on-site inspections.'}
+        {isAdmin && 'MSInS Oversight Mode: State-level tracking of active pilot milestones and escrow disbursement triggers.'}
+      </FiikRoleNotice>
 
-          {/* Role Permission Notice */}
-          <div className="bg-white border border-gray-200 rounded-xl p-4 shadow-sm mb-6 text-xs text-gray-600">
-            <span className="font-bold text-navy-950 block uppercase tracking-wider">EXECUTION ROLE PERMISSION: {role.toUpperCase()}</span>
-            <p className="mt-0.5">
-              {isStartup && 'You are authorized to execute assigned milestones and upload evidence files for evaluator review.'}
-              {isDept && 'Read-only monitoring mode. Department officers can inspect milestone deliverables and progress updates.'}
-              {isEvaluator && 'Technical Evaluator mode. You can inspect deliverables and conduct on-site field evaluations.'}
-              {isAdmin && 'MSInS Oversight mode. System-level tracking of active pilot execution milestones.'}
-            </p>
-          </div>
-
-          {/* Milestones List */}
-          <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-card">
-            <h3 className="text-sm font-bold text-navy-950 mb-4 pb-2 border-b border-gray-100">
-              Milestones &amp; Work Plan
-            </h3>
-            <div className="divide-y divide-gray-100">
-              {milestones.map((m) => (
-                <div key={m.id} className="py-4 flex flex-wrap items-center justify-between gap-4">
-                  <div className="flex items-start gap-3">
-                    <span
-                      className={`h-7 w-7 rounded-full flex items-center justify-center text-xs font-bold shrink-0 ${
-                        m.status === 'Completed'
-                          ? 'bg-green-100 text-green-700 border border-green-300'
-                          : m.status === 'In Progress'
-                          ? 'bg-orange-100 text-orange-700 border border-orange-300'
-                          : 'bg-gray-100 text-gray-500'
-                      }`}
-                    >
-                      {m.id}
-                    </span>
-                    <div>
-                      <h4 className="font-extrabold text-navy-950 text-sm">{m.name}</h4>
-                      <p className="text-xs text-gray-500 mt-0.5">{m.description}</p>
-                      <p className="text-[11px] text-gray-400 mt-1">
-                        Timeline: <strong className="text-gray-700">{m.timeline}</strong> | Deliverable: <strong className="text-gray-700">{m.expectedOutput}</strong>
-                      </p>
-                    </div>
-                  </div>
-
+      {/* ── Level 3 Document Card: Active Milestones Ledger ── */}
+      <FiikDocumentCard
+        title="Phased Milestone Execution Ledger"
+        subtitle="Verifiable deliverables required for technical evaluation sign-off and grant release."
+        index={1}
+        icon="🚀"
+      >
+        <div className="space-y-4">
+          {milestones.map((m, idx) => (
+            <div
+              key={m.id}
+              className={`p-5 rounded-2xl border-2 transition-all flex flex-col md:flex-row items-start md:items-center justify-between gap-4 ${
+                m.status === 'In Progress'
+                  ? 'border-amber-400 bg-amber-50/40 shadow-xs ring-2 ring-amber-400/20'
+                  : m.status === 'Completed'
+                  ? 'border-emerald-200 bg-emerald-50/30'
+                  : 'border-gray-200 bg-gray-50/50'
+              }`}
+            >
+              <div className="flex items-start gap-4">
+                <span
+                  className={`h-10 w-10 rounded-2xl flex items-center justify-center text-sm font-black shrink-0 shadow-xs ${
+                    m.status === 'Completed'
+                      ? 'bg-emerald-600 text-white'
+                      : m.status === 'In Progress'
+                      ? 'bg-amber-500 text-white'
+                      : 'bg-gray-300 text-gray-700'
+                  }`}
+                >
+                  0{idx + 1}
+                </span>
+                <div>
                   <div className="flex items-center gap-3">
-                    <StatusBadge status={m.status} />
-
-                    {m.status === 'In Progress' && isStartup && (
-                      <button
-                        onClick={() => navigate('/evidence-submission')}
-                        className="btn btn-primary text-xs"
-                      >
-                        Submit Evidence →
-                      </button>
-                    )}
-
-                    {m.status === 'In Progress' && (isEvaluator || isDept || isAdmin) && (
-                      <button
-                        onClick={() => navigate('/field-evaluation')}
-                        className="btn btn-secondary text-xs"
-                      >
-                        Audit Evidence →
-                      </button>
-                    )}
-
-                    {m.status === 'Completed' && (
-                      <span className="text-xs font-bold text-green-700 bg-green-50 px-3 py-1 rounded border border-green-200">
-                        ✓ Verified
-                      </span>
-                    )}
+                    <h3 className="font-black text-base text-[#071A3D]">{m.name}</h3>
+                    <FiikStatusBadge status={m.status} />
+                  </div>
+                  <p className="text-xs text-gray-600 mt-1 font-medium leading-relaxed">
+                    {m.description}
+                  </p>
+                  <div className="flex flex-wrap items-center gap-3 text-xs text-gray-500 mt-2 font-medium">
+                    <span>Timeline: <strong className="text-[#071A3D]">{m.timeline}</strong></span>
+                    <span>·</span>
+                    <span>Deliverable: <strong className="text-[#071A3D]">{m.expectedOutput}</strong></span>
                   </div>
                 </div>
-              ))}
+              </div>
+
+              <div className="flex items-center gap-3 shrink-0 self-end md:self-center">
+                {m.status === 'In Progress' && isStartup && (
+                  <button
+                    onClick={() => navigate('/evidence-submission')}
+                    className="px-5 py-2.5 rounded-xl font-black text-xs text-white shadow-md transition-all flex items-center gap-2 cursor-pointer"
+                    style={{ backgroundColor: theme.accent }}
+                  >
+                    <span>Submit Evidence</span>
+                    <span>→</span>
+                  </button>
+                )}
+
+                {m.status === 'In Progress' && (isEvaluator || isDept || isAdmin) && (
+                  <button
+                    onClick={() => navigate('/field-evaluation')}
+                    className="px-5 py-2.5 rounded-xl font-black text-xs text-white bg-emerald-600 hover:bg-emerald-700 shadow-md transition-all flex items-center gap-2 cursor-pointer"
+                  >
+                    <span>Audit Evidence</span>
+                    <span>→</span>
+                  </button>
+                )}
+
+                {m.status === 'Completed' && (
+                  <span className="text-xs font-black text-emerald-800 bg-emerald-100 px-3.5 py-1.5 rounded-xl border border-emerald-300">
+                    ✓ Verified &amp; Signed
+                  </span>
+                )}
+              </div>
             </div>
-          </div>
-        </main>
-      </div>
-    </div>
+          ))}
+        </div>
+      </FiikDocumentCard>
+    </FiikPageShell>
   );
 }
