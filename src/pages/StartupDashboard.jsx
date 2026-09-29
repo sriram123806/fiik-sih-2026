@@ -3,7 +3,13 @@ import { Link, useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import Sidebar from '../components/Sidebar';
 import PilotProgressChart from '../components/PilotProgressChart';
-import { FiikHero, FiikMetricCard, FiikDocumentCard, FiikDarkPanel, FiikStatusBadge } from '../components/FiikDesignSystem';
+import {
+  FiikHero,
+  FiikDarkPanel,
+  FiikMetricCard,
+  FiikDocumentCard,
+  FiikStatusBadge,
+} from '../components/FiikDesignSystem';
 import { useAuth } from '../context/AuthContext';
 import { usePilot } from '../context/PilotContext';
 import { currentStartup, notificationsByRole } from '../data/mockData';
@@ -22,7 +28,6 @@ const ROLE_IMAGES = {
   admin: procurementLegalImg,
 };
 
-// Role-specific welcome copy, operational metrics, and quotation overlays matching the visual reference
 const ROLE_CONFIGS = {
   startup: {
     portalBadge: 'STARTUP INNOVATOR PORTAL',
@@ -84,7 +89,7 @@ const ROLE_CONFIGS = {
     cards: [
       { id: '01', icon: '📋', count: '5', label: 'State-Wide Active Pilots', status: 'Across 4 Municipalities', sub: 'Pipeline Overview', path: '/execution' },
       { id: '02', icon: '💳', count: '2', label: 'Escrow Disbursements', status: '₹ 25.0 Lakhs Pending', sub: 'Process Escrow', path: '/approval-payment' },
-      { id: '03', icon: '🛂', count: '1', label: 'PREP Passports Issued', status: 'State Registry Live', sub: 'Inspect Registry', path: '/completed-pilot' },
+      { id: '03', icon: '🛂', count: '1', label: 'PREP Passports Issued', status: 'FIIK Registry Active', sub: 'Inspect Registry', path: '/completed-pilot' },
       { id: '04', icon: '⚙️', count: '4', label: 'Work Orders Published', status: 'Multi-Party Executed', sub: 'Manage Orders', path: '/work-order' },
     ],
   },
@@ -103,7 +108,7 @@ export default function StartupDashboard() {
   const displayName = user?.name || (activeRole === 'startup' ? currentStartup?.name : null);
 
   return (
-    <div className="min-h-screen bg-[#F4F6F8] flex flex-col font-sans text-gray-900 antialiased">
+    <div className="min-h-screen bg-[#F4F6F8] flex flex-col font-sans text-gray-900 antialiased selection:bg-amber-200">
       <Header variant="dashboard" />
       
       <div className="flex flex-1">
@@ -111,7 +116,7 @@ export default function StartupDashboard() {
         
         <main className="flex-1 px-4 sm:px-6 lg:px-8 py-8 max-w-7xl mx-auto w-full">
 
-          {/* ── Top PREP-Benchmark Level 1 Hero Banner ── */}
+          {/* ── Level 1: Master Navy Hero Banner ── */}
           <div className="bg-[#071A3D] text-white rounded-2xl p-6 sm:p-8 shadow-xl border-2 border-amber-400/80 mb-8 relative overflow-hidden">
             <div
               className="absolute top-0 right-0 w-80 h-80 rounded-full pointer-events-none opacity-20"
@@ -126,12 +131,12 @@ export default function StartupDashboard() {
             <div className="relative z-10 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
               <div className="max-w-2xl min-w-0">
                 <div className="flex flex-wrap items-center gap-2.5 mb-2.5">
-                  <span className="text-[11px] font-black uppercase tracking-widest text-amber-300 bg-amber-500/20 border border-amber-400/40 px-3 py-1 rounded-full">
-                    {theme.icon} {config.portalBadge}
+                  <span className="text-xs font-black uppercase tracking-widest text-amber-300 bg-amber-500/20 border border-amber-400/40 px-3 py-1 rounded-full">
+                    {config.portalBadge}
                   </span>
-                  <span className="text-[11px] font-bold text-emerald-300 bg-emerald-500/20 px-2.5 py-1 rounded-full border border-emerald-400/40 flex items-center gap-1">
-                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                    State Registry Verified
+                  <span className="text-xs font-bold text-emerald-300 bg-emerald-500/20 px-2.5 py-1 rounded-full border border-emerald-400/40 flex items-center gap-1.5">
+                    <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+                    Validated in FIIK Pilot Registry
                   </span>
                 </div>
 
@@ -139,11 +144,11 @@ export default function StartupDashboard() {
                   {config.welcome(displayName)}
                 </h1>
 
-                <p className="text-xs sm:text-sm text-gray-300 mt-2.5 font-medium leading-relaxed max-w-xl">
+                <p className="text-sm text-gray-300 mt-2.5 font-medium leading-relaxed max-w-xl">
                   {config.subtitle}
                 </p>
 
-                <div className="mt-5 flex flex-wrap items-center gap-3">
+                <div className="mt-6 flex flex-wrap items-center gap-3">
                   <Link
                     to={config.ctaPath}
                     className="text-white text-xs font-black px-6 py-3 rounded-xl shadow-md transition-all flex items-center gap-2 border border-white/20"
@@ -154,9 +159,10 @@ export default function StartupDashboard() {
                   </Link>
                   <Link
                     to="/completed-pilot"
-                    className="text-xs font-bold text-gray-200 hover:text-white bg-white/10 hover:bg-white/15 px-4 py-3 rounded-xl border border-white/10 transition-colors"
+                    className="text-xs font-bold text-gray-200 hover:text-white bg-white/10 hover:bg-white/15 px-5 py-3 rounded-xl border border-white/10 transition-colors flex items-center gap-2"
                   >
-                    View Official PREP Passport 🛂
+                    <span>Inspect PREP Passport Credential</span>
+                    <span>🛂</span>
                   </Link>
                 </div>
               </div>
@@ -177,7 +183,7 @@ export default function StartupDashboard() {
             </div>
           </div>
 
-          {/* ── 4 Solid Enterprise Metric Modules ── */}
+          {/* ── Level 4: Enterprise KPI Metric Modules ── */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
             {config.cards.map((card) => (
               <div
@@ -191,7 +197,7 @@ export default function StartupDashboard() {
                     <span className="text-2xl p-2 rounded-xl bg-white/20 backdrop-blur-xs border border-white/20 shrink-0">
                       {card.icon}
                     </span>
-                    <span className="text-[11px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full bg-black/25 text-white border border-white/20 font-mono">
+                    <span className="text-xs font-black uppercase tracking-wider px-2.5 py-1 rounded-full bg-black/25 text-white border border-white/20 font-mono">
                       {card.id}
                     </span>
                   </div>
@@ -217,9 +223,43 @@ export default function StartupDashboard() {
             ))}
           </div>
 
-          {/* ── Level 3 Document Card: Active Pilot Operations ── */}
+          {/* ── Level 2: Dark Operational Status & Telemetry Bar ── */}
+          <FiikDarkPanel
+            title="Operational Telemetry &amp; Multi-Party Execution Stream"
+            subtitle="Real-time cloud monitoring of deployed hardware nodes across municipal wards"
+            badge={
+              <span className="text-xs font-black px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/40 flex items-center gap-1.5">
+                <span className="h-2 w-2 rounded-full bg-emerald-400 animate-ping" />
+                Live Sensor Feed Active
+              </span>
+            }
+          >
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs">
+              <div className="p-3.5 rounded-xl bg-white/5 border border-white/10">
+                <span className="text-gray-400 font-bold block text-[11px]">ACTIVE NODES</span>
+                <span className="text-xl font-black text-white block mt-1">40 / 40 Online</span>
+                <span className="text-[10px] text-emerald-400 mt-0.5 block">100% Uptime</span>
+              </div>
+              <div className="p-3.5 rounded-xl bg-white/5 border border-white/10">
+                <span className="text-gray-400 font-bold block text-[11px]">COLLECTION EFFICIENCY</span>
+                <span className="text-xl font-black text-emerald-300 block mt-1">+45.2% Gain</span>
+                <span className="text-[10px] text-gray-300 mt-0.5 block">vs. Manual Baseline</span>
+              </div>
+              <div className="p-3.5 rounded-xl bg-white/5 border border-white/10">
+                <span className="text-gray-400 font-bold block text-[11px]">SOURCE SEGREGATION</span>
+                <span className="text-xl font-black text-amber-300 block mt-1">82.4% Compliance</span>
+                <span className="text-[10px] text-gray-300 mt-0.5 block">Wards 12, 14, 15</span>
+              </div>
+              <div className="p-3.5 rounded-xl bg-white/5 border border-white/10">
+                <span className="text-gray-400 font-bold block text-[11px]">ESCROW GRANT RELEASE</span>
+                <span className="text-xl font-black text-white block mt-1">₹ 5.0 L Processed</span>
+                <span className="text-[10px] text-gray-300 mt-0.5 block">Milestone 2 Pending</span>
+              </div>
+            </div>
+          </FiikDarkPanel>
+
+          {/* ── Level 3: White Document Card for Active Pilot Operations ── */}
           <div className="bg-white border-2 border-gray-200/90 rounded-2xl shadow-sm overflow-hidden mb-8">
-            {/* Dark Navy Card Header Bar */}
             <div className="px-6 sm:px-8 py-5 bg-[#071A3D] text-white flex flex-wrap items-center justify-between gap-4 border-b border-navy-800">
               <div className="flex items-center gap-3">
                 <span
@@ -251,7 +291,6 @@ export default function StartupDashboard() {
               </div>
             </div>
 
-            {/* Main Pilot Information Body */}
             <div className="p-6 sm:p-8">
               <div className="flex flex-wrap items-start justify-between gap-6 pb-6 border-b border-gray-100">
                 <div>
@@ -260,12 +299,12 @@ export default function StartupDashboard() {
                       {pilot?.name || 'Smart Waste Segregation System'}
                     </h3>
                   </div>
-                  <p className="text-xs sm:text-sm text-gray-600 mt-1.5 font-bold flex items-center gap-2">
+                  <p className="text-xs sm:text-sm text-gray-600 mt-1.5 font-bold flex flex-wrap items-center gap-2">
                     <span>🏛️ Department of Urban Development</span>
                     <span>·</span>
                     <span>🚀 GreenGrid Technologies Pvt. Ltd.</span>
                     <span>·</span>
-                    <span className="text-amber-700 bg-amber-50 px-2.5 py-0.5 rounded-full border border-amber-200">
+                    <span className="text-amber-700 bg-amber-50 px-2.5 py-0.5 rounded-full border border-amber-200 text-xs">
                       ID: {pilot?.id || 'PLT-2026-0417'}
                     </span>
                   </p>
@@ -298,7 +337,6 @@ export default function StartupDashboard() {
 
           {/* ── Notifications & Quick Workflow Gating ── */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* Quick Actions Panel */}
             <div className="lg:col-span-1 bg-white border-2 border-gray-200/90 rounded-2xl p-6 shadow-sm flex flex-col justify-between">
               <div>
                 <div className="flex items-center gap-2.5 pb-3 mb-4 border-b border-gray-100">
@@ -362,13 +400,12 @@ export default function StartupDashboard() {
               </div>
 
               <div className="mt-5 pt-4 border-t border-gray-100 text-center">
-                <span className="text-[11px] font-bold text-gray-500">
-                  Government Procurement Mechanism v1.0
+                <span className="text-xs font-bold text-gray-500">
+                  FIIK Pilot Intelligence Procurement Mechanism
                 </span>
               </div>
             </div>
 
-            {/* Role Notifications & Audits */}
             <div className="lg:col-span-2 bg-white border-2 border-gray-200/90 rounded-2xl p-6 shadow-sm">
               <div className="flex items-center justify-between pb-3 mb-4 border-b border-gray-100">
                 <div className="flex items-center gap-2.5">

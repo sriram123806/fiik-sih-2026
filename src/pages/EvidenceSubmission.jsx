@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import {
   FiikPageShell,
   FiikHero,
+  FiikDarkPanel,
   FiikDocumentCard,
   FiikRoleNotice,
   FiikStatusBadge,
@@ -54,7 +55,7 @@ export default function EvidenceSubmission() {
       {/* ── Level 1 Hero Banner ── */}
       <FiikHero
         tag="IMMUTABLE EVIDENCE REPOSITORY"
-        verifiedLabel="Cryptographic Timestamp Active"
+        verifiedLabel="Cryptographic Timestamp Protocol Active"
         title={`Evidence Submission — Milestone 0${activeMilestone?.id || '2'}`}
         subtitle={`${activeMilestone?.name || 'Initial Performance Evaluation'}: Upload verifiable telemetry logs, geotagged deployment photos, and sensor datasets for evaluator audit.`}
         pipelineStep={3}
@@ -73,25 +74,34 @@ export default function EvidenceSubmission() {
         }
       />
 
-      {/* ── Role Governance Notice ── */}
-      <FiikRoleNotice
-        title={`EVIDENCE REPOSITORY ROLE · ${theme.roleLabel.toUpperCase()}`}
-        action={
-          !isStartup && (
-            <button
-              onClick={() => navigate('/field-evaluation')}
-              className="px-4 py-2 rounded-xl text-xs font-black text-white shadow-xs"
-              style={{ backgroundColor: theme.accent }}
-            >
-              Go to Field Evaluation Audit →
-            </button>
-          )
+      {/* ── Level 2: Dark Operational Cryptographic Ledger Status ── */}
+      <FiikDarkPanel
+        title="Evidence Ledger &amp; Integrity Validation"
+        subtitle="SHA-256 cryptographic hashing ensures file immutability upon upload into the state pilot repository"
+        badge={
+          <span className="text-xs font-black px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/40">
+            Hash Protocol: SHA-256 Verified
+          </span>
         }
       >
-        {isStartup
-          ? 'You are authorized to upload raw telemetry files, field photographs, and test results. Each submission is timestamped and locked upon evaluator audit.'
-          : `As a ${theme.roleLabel}, you are viewing submitted evidence in read-only audit mode. Use the Field Evaluation interface to verify items.`}
-      </FiikRoleNotice>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
+          <div className="p-3.5 rounded-xl bg-white/5 border border-white/10">
+            <span className="text-gray-400 font-bold block text-[11px]">UPLOADED ARTIFACTS</span>
+            <span className="text-xl font-black text-white block mt-1">{evidence.length} Files Recorded</span>
+            <span className="text-[10px] text-emerald-400 mt-0.5 block">Zero Corrupt Records</span>
+          </div>
+          <div className="p-3.5 rounded-xl bg-white/5 border border-white/10">
+            <span className="text-gray-400 font-bold block text-[11px]">AUDIT STATUS</span>
+            <span className="text-xl font-black text-amber-300 block mt-1">Pending Field Inspection</span>
+            <span className="text-[10px] text-gray-300 mt-0.5 block">Scheduled for 10 Oct 2025</span>
+          </div>
+          <div className="p-3.5 rounded-xl bg-white/5 border border-white/10">
+            <span className="text-gray-400 font-bold block text-[11px]">ASSIGNED AUDITOR</span>
+            <span className="text-xl font-black text-white block mt-1">Dr. Ananya Rao</span>
+            <span className="text-[10px] text-emerald-400 mt-0.5 block">Empanelled Technical Expert</span>
+          </div>
+        </div>
+      </FiikDarkPanel>
 
       {/* ── Level 3 Document Card: Upload Zone (For Startup) ── */}
       {isStartup && (
@@ -191,7 +201,7 @@ export default function EvidenceSubmission() {
           <div className="mt-8 pt-5 border-t border-gray-100 flex flex-wrap items-center justify-between gap-4">
             <button
               onClick={() => navigate('/execution')}
-              className="px-5 py-2.5 rounded-xl border-2 border-gray-300 font-bold text-xs text-gray-700 hover:bg-gray-50 transition-colors"
+              className="px-5 py-2.5 rounded-xl border-2 border-gray-300 font-bold text-xs text-gray-700 hover:bg-gray-50 transition-colors cursor-pointer"
             >
               Save Draft
             </button>

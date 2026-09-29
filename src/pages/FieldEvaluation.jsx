@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import {
   FiikPageShell,
   FiikHero,
-  FiikDocumentCard,
   FiikDarkPanel,
+  FiikDocumentCard,
   FiikRoleNotice,
   FiikStatusBadge,
 } from '../components/FiikDesignSystem';
@@ -64,47 +64,51 @@ export default function FieldEvaluation() {
         rightSlot={
           <div className="bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/20 text-right">
             <span className="text-[10px] font-black uppercase tracking-widest text-amber-300 block">
-              AUDIT STATUS
+              AUDIT SCORE
             </span>
             <span className="text-xl font-black text-emerald-300 block mt-0.5">
-              92.4% Score
+              92.4% Verified
             </span>
             <span className="text-[10px] text-gray-300 font-bold block mt-0.5">
-              ✓ Field Verification Passed
+              ✓ Field Inspection Passed
             </span>
           </div>
         }
       />
 
-      {/* ── Role Governance Notice ── */}
-      <FiikRoleNotice
-        title={`EVALUATION ROLE PERMISSION · ${theme.roleLabel.toUpperCase()}`}
+      {/* ── Level 2: Dark Operational Audit & Telemetry Stream ── */}
+      <FiikDarkPanel
+        title="Evaluator Verification &amp; Sensor Calibration Status"
+        subtitle="Empanelled expert verification criteria under Maharashtra State Innovation Society guidelines"
+        badge={
+          <span className="text-xs font-black px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/40">
+            Inspector: Dr. Ananya Rao (Empanelled)
+          </span>
+        }
       >
-        {isEvaluator && 'You are authorized to audit technical telemetry, record field inspection findings, complete checklist items, and recommend milestone completion.'}
-        {isDept && 'Department Officer View: Review the technical expert evaluation before authorizing escrow grant disbursement.'}
-        {isAdmin && 'MSInS Admin View: Oversight of technical evaluation accuracy and evidence checklist verification.'}
-        {isStartup && 'Startup View: Read-only inspection of evaluator checklist and field audit status for Milestone 2.'}
-      </FiikRoleNotice>
-
-      {/* ── Pilot Info Summary Banner ── */}
-      <div className="bg-white border-2 border-gray-200/90 rounded-2xl p-6 shadow-sm mb-8 grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs">
-        <div>
-          <span className="text-gray-400 block font-black uppercase text-[10px]">PILOT NAME</span>
-          <strong className="text-[#071A3D] font-extrabold text-sm block mt-0.5">{pilot.name}</strong>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs">
+          <div className="p-3.5 rounded-xl bg-white/5 border border-white/10">
+            <span className="text-gray-400 font-bold block text-[11px]">CALIBRATION ACCURACY</span>
+            <span className="text-xl font-black text-emerald-300 block mt-1">98.2% Confirmed</span>
+            <span className="text-[10px] text-gray-300 mt-0.5 block">IoT Optical Sensor</span>
+          </div>
+          <div className="p-3.5 rounded-xl bg-white/5 border border-white/10">
+            <span className="text-gray-400 font-bold block text-[11px]">INSPECTED WARDS</span>
+            <span className="text-xl font-black text-white block mt-1">Wards 12, 14, 15</span>
+            <span className="text-[10px] text-emerald-400 mt-0.5 block">Pune Municipal Corp</span>
+          </div>
+          <div className="p-3.5 rounded-xl bg-white/5 border border-white/10">
+            <span className="text-gray-400 font-bold block text-[11px]">BENCHMARK TARGET</span>
+            <span className="text-xl font-black text-amber-300 block mt-1">&gt;40% Efficiency</span>
+            <span className="text-[10px] text-emerald-300 mt-0.5 block">Achieved 45.2%</span>
+          </div>
+          <div className="p-3.5 rounded-xl bg-white/5 border border-white/10">
+            <span className="text-gray-400 font-bold block text-[11px]">AUDIT RECOMMENDATION</span>
+            <span className="text-xl font-black text-emerald-300 block mt-1">Approved ✓</span>
+            <span className="text-[10px] text-gray-300 mt-0.5 block">Milestone 2 Pass</span>
+          </div>
         </div>
-        <div>
-          <span className="text-gray-400 block font-black uppercase text-[10px]">NODAL DEPARTMENT</span>
-          <strong className="text-[#071A3D] font-extrabold text-sm block mt-0.5">{pilot.department}</strong>
-        </div>
-        <div>
-          <span className="text-gray-400 block font-black uppercase text-[10px]">PILOT ID</span>
-          <strong className="text-[#071A3D] font-extrabold text-sm block mt-0.5">{pilot.pilotId || pilot.id}</strong>
-        </div>
-        <div>
-          <span className="text-gray-400 block font-black uppercase text-[10px]">AUDITED MILESTONE</span>
-          <strong className="text-amber-700 font-extrabold text-sm block mt-0.5">Milestone 2 (In Progress)</strong>
-        </div>
-      </div>
+      </FiikDarkPanel>
 
       {/* ── Level 3 Document Card: Evaluation Interface & Tabs ── */}
       <FiikDocumentCard
@@ -152,7 +156,7 @@ export default function FieldEvaluation() {
                   <FiikStatusBadge status="Uploaded" tone="blue" />
                   <button
                     type="button"
-                    className="px-3.5 py-1.5 rounded-lg border-2 border-[#071A3D] text-xs font-black text-[#071A3D] hover:bg-navy-50 transition-colors"
+                    className="px-3.5 py-1.5 rounded-lg border-2 border-[#071A3D] text-xs font-black text-[#071A3D] hover:bg-navy-50 transition-colors cursor-pointer"
                   >
                     View File ↗
                   </button>
@@ -224,7 +228,7 @@ export default function FieldEvaluation() {
               <strong className="text-[#071A3D] font-black">Field Inspection Date:</strong> 08 Oct 2025
             </p>
             <p className="font-medium text-gray-700">
-              <strong className="text-[#071A3D] font-black">Empanelled Technical Expert:</strong> Dr. Ananya Rao (IIT Bombay Empanelled)
+              <strong className="text-[#071A3D] font-black">Empanelled Technical Expert:</strong> Dr. Ananya Rao (Empanelled CleanTech Specialist)
             </p>
             <p className="font-medium text-gray-700">
               <strong className="text-[#071A3D] font-black">Location Inspected:</strong> Pune Municipal Corporation Wards 12, 14, 15
@@ -239,7 +243,7 @@ export default function FieldEvaluation() {
         <div className="mt-8 pt-5 border-t border-gray-100 flex flex-wrap justify-between items-center gap-4">
           <button
             onClick={() => navigate('/execution')}
-            className="px-5 py-2.5 rounded-xl border-2 border-gray-300 font-bold text-xs text-gray-700 hover:bg-gray-50 transition-colors"
+            className="px-5 py-2.5 rounded-xl border-2 border-gray-300 font-bold text-xs text-gray-700 hover:bg-gray-50 transition-colors cursor-pointer"
           >
             ← Return to Execution
           </button>
@@ -247,7 +251,7 @@ export default function FieldEvaluation() {
           {isEvaluator && (
             <button
               onClick={handleApprove}
-              className="px-6 py-2.5 rounded-xl font-black text-xs text-white bg-emerald-600 hover:bg-emerald-700 shadow-md transition-all ml-auto"
+              className="px-6 py-2.5 rounded-xl font-black text-xs text-white bg-emerald-600 hover:bg-emerald-700 shadow-md transition-all ml-auto cursor-pointer"
             >
               Approve Milestone Evidence &amp; Proceed to Payment →
             </button>
@@ -256,7 +260,7 @@ export default function FieldEvaluation() {
           {isDept && (
             <button
               onClick={() => navigate('/approval-payment')}
-              className="px-6 py-2.5 rounded-xl font-black text-xs text-white bg-orange-600 hover:bg-orange-700 shadow-md transition-all ml-auto"
+              className="px-6 py-2.5 rounded-xl font-black text-xs text-white bg-orange-600 hover:bg-orange-700 shadow-md transition-all ml-auto cursor-pointer"
             >
               Confirm Department Milestone Sign-Off →
             </button>
@@ -265,7 +269,7 @@ export default function FieldEvaluation() {
           {isAdmin && (
             <button
               onClick={() => navigate('/approval-payment')}
-              className="px-6 py-2.5 rounded-xl font-black text-xs text-white bg-purple-800 hover:bg-purple-900 shadow-md transition-all ml-auto"
+              className="px-6 py-2.5 rounded-xl font-black text-xs text-white bg-purple-800 hover:bg-purple-900 shadow-md transition-all ml-auto cursor-pointer"
             >
               Proceed to Grant &amp; Finance Release →
             </button>
@@ -274,7 +278,7 @@ export default function FieldEvaluation() {
           {isStartup && (
             <button
               onClick={() => navigate('/approval-payment')}
-              className="px-6 py-2.5 rounded-xl font-black text-xs text-white bg-[#071A3D] hover:bg-black shadow-md transition-all ml-auto"
+              className="px-6 py-2.5 rounded-xl font-black text-xs text-white bg-[#071A3D] hover:bg-black shadow-md transition-all ml-auto cursor-pointer"
             >
               Track Payment Status →
             </button>

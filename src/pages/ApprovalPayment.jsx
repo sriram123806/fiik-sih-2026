@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import {
   FiikPageShell,
   FiikHero,
-  FiikDocumentCard,
   FiikDarkPanel,
+  FiikDocumentCard,
   FiikRoleNotice,
   FiikStatusBadge,
 } from '../components/FiikDesignSystem';
@@ -55,15 +55,39 @@ export default function ApprovalPayment() {
         }
       />
 
-      {/* ── Role Governance Notice ── */}
-      <FiikRoleNotice
-        title={`FINANCIAL DISBURSEMENT PERMISSION · ${theme.roleLabel.toUpperCase()}`}
+      {/* ── Level 2: Dark Operational Escrow Treasury Stream ── */}
+      <FiikDarkPanel
+        title="Escrow Account Liquidity &amp; PFMS Treasury Telemetry"
+        subtitle="Dedicated public procurement escrow account governed under State Innovation Society guidelines"
+        badge={
+          <span className="text-xs font-black px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/40">
+            Escrow Status: Liquid &amp; Ready
+          </span>
+        }
       >
-        {isStartup && 'Startup Action: Track milestone 2 verification approval and invoice payment release.'}
-        {isDept && 'Government Dept Action: Confirm municipal satisfaction to release finance disbursement.'}
-        {isEvaluator && 'Evaluator View: Technical audit recommendation sign-off recorded for Milestone 2.'}
-        {isAdmin && 'MSInS Nodal Authority: Authorize escrow release and trigger official PREP Passport generation.'}
-      </FiikRoleNotice>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs">
+          <div className="p-3.5 rounded-xl bg-white/5 border border-white/10">
+            <span className="text-gray-400 font-bold block text-[11px]">TOTAL PILOT GRANT</span>
+            <span className="text-xl font-black text-white block mt-1">₹ 25.0 Lakhs</span>
+            <span className="text-[10px] text-emerald-400 mt-0.5 block">100% Locked in Escrow</span>
+          </div>
+          <div className="p-3.5 rounded-xl bg-white/5 border border-white/10">
+            <span className="text-gray-400 font-bold block text-[11px]">PREVIOUSLY RELEASED</span>
+            <span className="text-xl font-black text-emerald-300 block mt-1">₹ 5.0 Lakhs</span>
+            <span className="text-[10px] text-gray-300 mt-0.5 block">Milestone 1 Completed</span>
+          </div>
+          <div className="p-3.5 rounded-xl bg-white/5 border border-white/10">
+            <span className="text-gray-400 font-bold block text-[11px]">PENDING RELEASE</span>
+            <span className="text-xl font-black text-amber-300 block mt-1">₹ 5.0 Lakhs</span>
+            <span className="text-[10px] text-amber-300 mt-0.5 block">Milestone 2 Approval</span>
+          </div>
+          <div className="p-3.5 rounded-xl bg-white/5 border border-white/10">
+            <span className="text-gray-400 font-bold block text-[11px]">TREASURY GATEWAY</span>
+            <span className="text-xl font-black text-white block mt-1">PFMS Direct</span>
+            <span className="text-[10px] text-emerald-400 mt-0.5 block">Validated Protocol</span>
+          </div>
+        </div>
+      </FiikDarkPanel>
 
       {/* ── Level 3 Document Card: Four-Party Sign-off Matrix ── */}
       <FiikDocumentCard
@@ -160,7 +184,7 @@ export default function ApprovalPayment() {
           {isAdmin && (
             <button
               onClick={handleCompleteAndProceed}
-              className="px-6 py-2.5 rounded-xl font-black text-xs text-white bg-purple-800 hover:bg-purple-900 shadow-md transition-all ml-auto"
+              className="px-6 py-2.5 rounded-xl font-black text-xs text-white bg-purple-800 hover:bg-purple-900 shadow-md transition-all ml-auto cursor-pointer"
             >
               Release Payment &amp; Generate PREP Passport →
             </button>
@@ -169,7 +193,7 @@ export default function ApprovalPayment() {
           {isDept && (
             <button
               onClick={handleCompleteAndProceed}
-              className="px-6 py-2.5 rounded-xl font-black text-xs text-white bg-orange-600 hover:bg-orange-700 shadow-md transition-all ml-auto"
+              className="px-6 py-2.5 rounded-xl font-black text-xs text-white bg-orange-600 hover:bg-orange-700 shadow-md transition-all ml-auto cursor-pointer"
             >
               Confirm Department Payment Authorization →
             </button>
@@ -178,7 +202,7 @@ export default function ApprovalPayment() {
           {isStartup && (
             <button
               onClick={handleCompleteAndProceed}
-              className="px-6 py-2.5 rounded-xl font-black text-xs text-white shadow-md transition-all ml-auto"
+              className="px-6 py-2.5 rounded-xl font-black text-xs text-white shadow-md transition-all ml-auto cursor-pointer"
               style={{ backgroundColor: theme.accent }}
             >
               Submit Payment Request &amp; Track PREP →
@@ -188,7 +212,7 @@ export default function ApprovalPayment() {
           {isEvaluator && (
             <button
               onClick={() => navigate('/completed-pilot')}
-              className="px-6 py-2.5 rounded-xl font-black text-xs text-white bg-emerald-600 hover:bg-emerald-700 shadow-md transition-all ml-auto"
+              className="px-6 py-2.5 rounded-xl font-black text-xs text-white bg-emerald-600 hover:bg-emerald-700 shadow-md transition-all ml-auto cursor-pointer"
             >
               View PREP Record Registry →
             </button>

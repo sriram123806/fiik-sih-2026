@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import {
   FiikPageShell,
   FiikHero,
-  FiikDocumentCard,
   FiikDarkPanel,
+  FiikDocumentCard,
   FiikRoleNotice,
   FiikStatusBadge,
 } from '../components/FiikDesignSystem';
@@ -50,7 +50,7 @@ export default function FourPartyReview() {
       {/* ── Level 1 Hero Banner ── */}
       <FiikHero
         tag="MULTI-STAKEHOLDER GOVERNANCE GATEWAY"
-        verifiedLabel="4-Party Digital Sign-Off"
+        verifiedLabel="4-Party Digital Sign-Off Active"
         title="Four-Party Governance &amp; Pilot Authorization"
         subtitle="Coordinated multi-stakeholder governance: Startup Proposal → Department Validation → Technical Feasibility Audit → MSInS Work Order Issuance."
         pipelineStep={2}
@@ -69,15 +69,42 @@ export default function FourPartyReview() {
         }
       />
 
-      {/* ── Role Governance Notice ── */}
-      <FiikRoleNotice
-        title={`GOVERNANCE RESPONSIBILITY · ${theme.roleLabel.toUpperCase()}`}
+      {/* ── Level 2: Dark Operational Governance Stream ── */}
+      <FiikDarkPanel
+        title="Multi-Stakeholder Legal &amp; Technical Consensus Matrix"
+        subtitle="Cryptographic verification protocol ensuring transparency across municipal, technical, and regulatory authorities"
+        badge={
+          <span className="text-xs font-black px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-400/40">
+            Phase: Pre-Execution Sign-Off
+          </span>
+        }
       >
-        {isStartup && 'Your pilot proposal is actively being reviewed across municipal, technical, and state authorities.'}
-        {isDept && 'Government Department Review: Verify alignment with municipal requirements, location readiness, and sign off.'}
-        {isEvaluator && 'Technical Evaluator Review: Assess technical feasibility, baseline accuracy, and milestone criteria.'}
-        {isAdmin && 'MSInS Nodal Authority: Issue and publish the official legal FIIK Work Order following all 4 party sign-offs.'}
-      </FiikRoleNotice>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
+          {fourPartyReview.map((party, i) => {
+            const roleConfig = PARTY_ROLES[i] || PARTY_ROLES[0];
+            return (
+              <div
+                key={party.party}
+                className="p-4 rounded-xl border border-white/15 bg-white/5 flex flex-col justify-between"
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-xs font-black uppercase tracking-wider text-amber-300">
+                      Step 0{i + 1}
+                    </span>
+                    <span className="text-sm">{roleConfig.icon}</span>
+                  </div>
+                  <h4 className="font-bold text-white text-xs mb-1">{party.party}</h4>
+                  <p className="text-[11px] text-gray-300 leading-snug">{party.date || party.detail}</p>
+                </div>
+                <div className="mt-3 pt-2 border-t border-white/10 flex items-center justify-between">
+                  <FiikStatusBadge status={party.status} tone={party.state} />
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </FiikDarkPanel>
 
       {/* ── Level 3 Document Card: Proposal Summary ── */}
       <FiikDocumentCard
@@ -121,47 +148,6 @@ export default function FourPartyReview() {
         </div>
       </FiikDocumentCard>
 
-      {/* ── Four Party Stakeholder Grid ── */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
-        {fourPartyReview.map((party, i) => {
-          const roleConfig = PARTY_ROLES[i] || PARTY_ROLES[0];
-          return (
-            <div
-              key={party.party}
-              className="bg-white border-2 border-gray-200/90 rounded-2xl p-6 shadow-sm flex flex-col justify-between hover:border-gray-300 transition-all"
-            >
-              <div>
-                <div className="flex items-center justify-between mb-4">
-                  <span
-                    className="h-8 w-8 rounded-xl text-white font-black text-xs flex items-center justify-center shadow-xs"
-                    style={{ backgroundColor: roleConfig.accent }}
-                  >
-                    0{i + 1}
-                  </span>
-                  <FiikStatusBadge status={party.status} tone={party.state} />
-                </div>
-
-                <div className="flex items-center gap-2 mb-1.5">
-                  <span className="text-lg">{roleConfig.icon}</span>
-                  <h3 className="font-black text-sm text-[#071A3D]">
-                    {party.party}
-                  </h3>
-                </div>
-
-                <p className="text-xs text-gray-600 mt-1 font-medium leading-relaxed">
-                  {party.date || party.detail}
-                </p>
-              </div>
-
-              <div className="mt-5 pt-4 border-t border-gray-100 flex items-center justify-between text-[11px] font-bold text-gray-500">
-                <span>Sign-off Recorded</span>
-                <span className="text-emerald-600">✓ Digital Hash</span>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-
       {/* ── Level 3 Document Card: Governance Actions & Audit Trail ── */}
       <FiikDocumentCard
         title="Multi-Stakeholder Governance Actions"
@@ -186,7 +172,7 @@ export default function FourPartyReview() {
           {isDept && (
             <button
               onClick={handleApproveAction}
-              className="px-6 py-2.5 rounded-xl font-black text-xs text-white bg-orange-600 hover:bg-orange-700 shadow-md transition-all ml-auto"
+              className="px-6 py-2.5 rounded-xl font-black text-xs text-white bg-orange-600 hover:bg-orange-700 shadow-md transition-all ml-auto cursor-pointer"
             >
               ✓ Approve Department Requirement
             </button>
@@ -195,7 +181,7 @@ export default function FourPartyReview() {
           {isEvaluator && (
             <button
               onClick={handleApproveAction}
-              className="px-6 py-2.5 rounded-xl font-black text-xs text-white bg-emerald-600 hover:bg-emerald-700 shadow-md transition-all ml-auto"
+              className="px-6 py-2.5 rounded-xl font-black text-xs text-white bg-emerald-600 hover:bg-emerald-700 shadow-md transition-all ml-auto cursor-pointer"
             >
               ✓ Recommend Technical Feasibility
             </button>
@@ -204,7 +190,7 @@ export default function FourPartyReview() {
           {isAdmin && (
             <button
               onClick={handleApproveAction}
-              className="px-6 py-2.5 rounded-xl font-black text-xs text-white bg-purple-800 hover:bg-purple-900 shadow-md transition-all ml-auto"
+              className="px-6 py-2.5 rounded-xl font-black text-xs text-white bg-purple-800 hover:bg-purple-900 shadow-md transition-all ml-auto cursor-pointer"
             >
               📜 Finalize &amp; Issue Official Work Order →
             </button>
@@ -213,7 +199,7 @@ export default function FourPartyReview() {
           {isStartup && (
             <button
               onClick={handleApproveAction}
-              className="px-6 py-2.5 rounded-xl font-black text-xs text-white bg-[#071A3D] hover:bg-black shadow-md transition-all ml-auto"
+              className="px-6 py-2.5 rounded-xl font-black text-xs text-white bg-[#071A3D] hover:bg-black shadow-md transition-all ml-auto cursor-pointer"
             >
               View Pilot Execution Dashboard →
             </button>

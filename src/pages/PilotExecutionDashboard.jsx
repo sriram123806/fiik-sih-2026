@@ -3,8 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import {
   FiikPageShell,
   FiikHero,
-  FiikDocumentCard,
   FiikDarkPanel,
+  FiikDocumentCard,
   FiikRoleNotice,
   FiikStatusBadge,
 } from '../components/FiikDesignSystem';
@@ -29,7 +29,7 @@ export default function PilotExecutionDashboard() {
       {/* ── Level 1 Hero Banner ── */}
       <FiikHero
         tag="PILOT EXECUTION &amp; TELEMETRY CONTROL"
-        verifiedLabel="Live Telemetry Monitoring Active"
+        verifiedLabel="Live Telemetry Stream Active"
         title="Pilot Execution &amp; Milestone Work Plan"
         subtitle={
           isStartup
@@ -52,26 +52,40 @@ export default function PilotExecutionDashboard() {
         }
       />
 
-      {/* ── Role Governance Notice ── */}
-      <FiikRoleNotice
-        title={`EXECUTION ROLE PERMISSION · ${theme.roleLabel.toUpperCase()}`}
-        action={
-          (isEvaluator || isDept || isAdmin) && (
-            <Link
-              to="/field-evaluation"
-              className="px-4 py-2 rounded-xl text-xs font-black text-white shadow-xs"
-              style={{ backgroundColor: theme.accent }}
-            >
-              Open Technical Field Audit Interface →
-            </Link>
-          )
+      {/* ── Level 2: Dark Operational Status & Live Telemetry Stream ── */}
+      <FiikDarkPanel
+        title="Field Deployment Telemetry &amp; Node Health"
+        subtitle="Real-time status feed from 40 smart waste sensor nodes deployed across Pune Municipal Wards 12, 14, and 15"
+        badge={
+          <span className="text-xs font-black px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/40 flex items-center gap-1.5">
+            <span className="h-2 w-2 rounded-full bg-emerald-400 animate-ping" />
+            Active Mesh Network
+          </span>
         }
       >
-        {isStartup && 'You are authorized to deploy field units, upload evidentiary reports, and log live telemetry for evaluator review.'}
-        {isDept && 'Department Officer View: Monitor milestone deliverable completion and municipal performance metrics in real time.'}
-        {isEvaluator && 'Technical Evaluator Mode: Audit submitted sensor data, verify field deployments, and conduct on-site inspections.'}
-        {isAdmin && 'MSInS Oversight Mode: State-level tracking of active pilot milestones and escrow disbursement triggers.'}
-      </FiikRoleNotice>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs">
+          <div className="p-3.5 rounded-xl bg-white/5 border border-white/10">
+            <span className="text-gray-400 font-bold block text-[11px]">TELEMETRY NODES</span>
+            <span className="text-xl font-black text-white block mt-1">40 Active Units</span>
+            <span className="text-[10px] text-emerald-400 mt-0.5 block">0 Packet Loss</span>
+          </div>
+          <div className="p-3.5 rounded-xl bg-white/5 border border-white/10">
+            <span className="text-gray-400 font-bold block text-[11px]">BIN FILL SENSORS</span>
+            <span className="text-xl font-black text-emerald-300 block mt-1">78.2% Avg Level</span>
+            <span className="text-[10px] text-gray-300 mt-0.5 block">Smart Route Optimized</span>
+          </div>
+          <div className="p-3.5 rounded-xl bg-white/5 border border-white/10">
+            <span className="text-gray-400 font-bold block text-[11px]">SEGREGATION PURITY</span>
+            <span className="text-xl font-black text-amber-300 block mt-1">84.5% Score</span>
+            <span className="text-[10px] text-gray-300 mt-0.5 block">Optical AI Verified</span>
+          </div>
+          <div className="p-3.5 rounded-xl bg-white/5 border border-white/10">
+            <span className="text-gray-400 font-bold block text-[11px]">NEXT FIELD AUDIT</span>
+            <span className="text-xl font-black text-white block mt-1">10 Oct 2025</span>
+            <span className="text-[10px] text-emerald-300 mt-0.5 block">Dr. Ananya Rao</span>
+          </div>
+        </div>
+      </FiikDarkPanel>
 
       {/* ── Level 3 Document Card: Active Milestones Ledger ── */}
       <FiikDocumentCard

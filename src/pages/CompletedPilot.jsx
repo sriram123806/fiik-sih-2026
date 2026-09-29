@@ -51,7 +51,7 @@ export default function CompletedPilot() {
                     🛂 OFFICIAL DIGITAL CREDENTIAL · PORTABLE EVIDENCE
                   </span>
                   <span className="text-xs font-bold text-emerald-400 bg-emerald-500/20 px-2.5 py-0.5 rounded-full border border-emerald-400/40">
-                    ✓ Validated in State Registry
+                    ✓ Validated in FIIK Pilot Registry
                   </span>
                 </div>
                 <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight leading-snug">
@@ -163,7 +163,7 @@ export default function CompletedPilot() {
                       PORTABLE PROCUREMENT CREDENTIAL
                     </span>
                     <h3 className="text-base font-black text-white mt-1">
-                      Direct Scale-Up under GeM Rule 149
+                      Scale-Up Procurement via GeM Pilot Mechanism
                     </h3>
                     <p className="text-xs text-gray-300 mt-1 leading-relaxed">
                       Completed pilot evidence removes technical ambiguity for procurement officers nationwide.
@@ -176,7 +176,7 @@ export default function CompletedPilot() {
                   <h3 className="font-black text-navy-950 text-sm pb-2 border-b border-gray-100 flex items-center justify-between">
                     <span>Passport Particulars &amp; Recommendation</span>
                     <span className="text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
-                      ✓ Ready for GeM
+                      ✓ Verified for Scale-Up
                     </span>
                   </h3>
 

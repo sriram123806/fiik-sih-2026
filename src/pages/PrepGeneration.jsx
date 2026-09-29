@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import {
   FiikPageShell,
   FiikHero,
-  FiikDocumentCard,
   FiikDarkPanel,
+  FiikDocumentCard,
   FiikRoleNotice,
   FiikStatusBadge,
 } from '../components/FiikDesignSystem';
@@ -41,20 +41,45 @@ export default function PrepGeneration() {
               Synthesis 100%
             </span>
             <span className="text-[10px] text-gray-300 font-bold block mt-0.5">
-              Ready for Official Registry
+              Ready for FIIK Registry
             </span>
           </div>
         }
       />
 
-      {/* ── Role Governance Notice ── */}
-      <FiikRoleNotice
-        title={`CREDENTIAL ISSUANCE ROLE · ${theme.roleLabel.toUpperCase()}`}
+      {/* ── Level 2: Dark Operational Synthesis Engine Status ── */}
+      <FiikDarkPanel
+        title="PREP Synthesis Engine &amp; Cryptographic Proof Ledger"
+        subtitle="Immutable aggregation of multi-stakeholder milestones and verified field telemetry for public procurement scale-up"
+        badge={
+          <span className="text-xs font-black px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/40">
+            Engine Status: Fully Compiled
+          </span>
+        }
       >
-        {isAdmin
-          ? 'MSInS Nodal Authority: Finalize immutable cryptographic hash, sign with official state credentials, and publish into state procurement repository.'
-          : 'Inspect the automatically compiled PREP credential summary before official publication.'}
-      </FiikRoleNotice>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs">
+          <div className="p-3.5 rounded-xl bg-white/5 border border-white/10">
+            <span className="text-gray-400 font-bold block text-[11px]">DATA COMPILATION</span>
+            <span className="text-xl font-black text-white block mt-1">100% Verified</span>
+            <span className="text-[10px] text-emerald-400 mt-0.5 block">5 of 5 Sources Intact</span>
+          </div>
+          <div className="p-3.5 rounded-xl bg-white/5 border border-white/10">
+            <span className="text-gray-400 font-bold block text-[11px]">TECHNICAL SCORE</span>
+            <span className="text-xl font-black text-emerald-300 block mt-1">94.8% A+</span>
+            <span className="text-[10px] text-gray-300 mt-0.5 block">Empanelled Audit Sign-Off</span>
+          </div>
+          <div className="p-3.5 rounded-xl bg-white/5 border border-white/10">
+            <span className="text-gray-400 font-bold block text-[11px]">REGISTRY STATUS</span>
+            <span className="text-xl font-black text-amber-300 block mt-1">Pending Seal</span>
+            <span className="text-[10px] text-amber-300 mt-0.5 block">Awaiting MSInS Publish</span>
+          </div>
+          <div className="p-3.5 rounded-xl bg-white/5 border border-white/10">
+            <span className="text-gray-400 font-bold block text-[11px]">PROCUREMENT PATH</span>
+            <span className="text-xl font-black text-white block mt-1">GeM Pilot Ready</span>
+            <span className="text-[10px] text-emerald-400 mt-0.5 block">Direct Scale-Up Eligible</span>
+          </div>
+        </div>
+      </FiikDarkPanel>
 
       {/* ── Level 3 Document Card: Synthesis Stepper ── */}
       <FiikDocumentCard
