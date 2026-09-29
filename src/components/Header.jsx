@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useRoleTheme } from '../utils/roleTheme';
+import fiikLogo from '../assets/fiik-logo.png';
 
 export default function Header({ variant = 'public', showHomeLink = false, backTo }) {
   const { role, chooseRole } = useAuth();
@@ -77,10 +78,10 @@ export default function Header({ variant = 'public', showHomeLink = false, backT
       <div className="tricolor-bar" />
 
       {/* ── Main White Branding Header ── */}
-      <div className="bg-white border-b border-gray-200/90 py-3 px-4">
+      <div className="bg-white border-b border-gray-200/90 py-2.5 px-4">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           
-          {/* Left Branding */}
+          {/* Left Branding with Approved FIIK Logo */}
           <div className="flex items-center gap-4 min-w-0">
             {backTo && (
               <button
@@ -96,16 +97,14 @@ export default function Header({ variant = 'public', showHomeLink = false, backT
                 75<br />Azadi ka<br />Amrit Mahotsav
               </span>
               <span className="h-9 w-px bg-gray-200 hidden sm:block" />
-              <div className="flex items-center gap-2.5 min-w-0">
-                <span className="h-9 w-9 rounded-md bg-[#071A3D] text-white flex items-center justify-center font-black text-lg shrink-0 shadow-sm">
-                  F
-                </span>
-                <div className="min-w-0">
-                  <span className="block font-black text-[#071A3D] text-xl leading-none tracking-tight">FIIK</span>
-                  <span className="block text-[10px] font-bold text-gray-500 tracking-wide truncate">
-                    Pilot Intelligence Procurement Mechanism
-                  </span>
-                </div>
+              
+              {/* Approved FIIK Logo Asset */}
+              <div className="flex items-center min-w-0">
+                <img
+                  src={fiikLogo}
+                  alt="FIIK - Pilot Intelligence Procurement Mechanism"
+                  className="h-10 sm:h-11 w-auto object-contain shrink-0"
+                />
               </div>
             </Link>
           </div>
