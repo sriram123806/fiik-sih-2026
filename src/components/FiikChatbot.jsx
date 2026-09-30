@@ -93,20 +93,44 @@ export default function FiikChatbot() {
     setMessages((prev) => [...prev, userMsg]);
     setInput('');
 
-    // Assistant response lookup
+    // Intelligent Dynamic Assistant Response Engine
     setTimeout(() => {
-      const matchKey = Object.keys(roleKB.answers).find(
-        (key) => key.toLowerCase() === textToSend.trim().toLowerCase()
+      const q = textToSend.trim().toLowerCase();
+      
+      // 1. Direct exact match check
+      const exactMatchKey = Object.keys(roleKB.answers).find(
+        (key) => key.toLowerCase() === q
       );
-      const botResponse = matchKey
-        ? roleKB.answers[matchKey]
-        : `FIIK Assistant: Regarding "${textToSend}", your current active phase is tracked under sequential FIIK governance rules. Refer to your role navigation for verified status.`;
+
+      let botResponse = '';
+
+      if (exactMatchKey) {
+        botResponse = roleKB.answers[exactMatchKey];
+      } else if (q.includes('prep') || q.includes('passport') || q.includes('credential')) {
+        botResponse = "PREP (Procurement Readiness Evidence Passport) is FIIK's evidence-backed digital credential. It compiles verified IoT telemetry, evaluator scorecards, and department sign-offs into a tamper-evident passport for direct procurement and GeM scale-up.";
+      } else if (q.includes('evidence') || q.includes('milestone') || q.includes('upload') || q.includes('file')) {
+        botResponse = "Milestone evidence requires uploading: (1) Field deployment logs (.xlsx/.json), (2) Geofenced photos with EXIF timestamp, (3) Telemetry sensor readings, and (4) Municipal officer endorsement letter.";
+      } else if (q.includes('payment') || q.includes('escrow') || q.includes('grant') || q.includes('pfms') || q.includes('money')) {
+        botResponse = "Grant disbursements follow a 4-party escrow protocol. Upon 100% milestone approval from the Nodal Department and Technical Evaluator, milestone funds (e.g. ₹6,50,000 for Milestone 2) are automatically released to the startup bank account.";
+      } else if (q.includes('work order') || q.includes('order') || q.includes('contract') || q.includes('agreement')) {
+        botResponse = "Work orders in FIIK are standardized pilot contracts signed off by all 4 parties (Startup, Nodal Department, Technical Evaluator, and MSInS Authority) detailing SLA metrics, milestone timeline, and escrow budgets.";
+      } else if (q.includes('evaluat') || q.includes('audit') || q.includes('expert') || q.includes('score')) {
+        botResponse = "Field evaluations are conducted by empanelled domain experts (e.g. Dr. Ananya Rao). Evaluators inspect live hardware, validate telemetry against municipal logs, and submit a comprehensive technical scorecard.";
+      } else if (q.includes('role') || q.includes('switch') || q.includes('access') || q.includes('permission')) {
+        botResponse = "FIIK enforces Role-Based Access Control (RBAC) across 4 portals: Startup Innovator (Blue), Government Department (Orange), Technical Evaluator (Green), and MSInS Secretariat (Purple). You can switch roles using the top-right header dropdown.";
+      } else if (q.includes('status') || q.includes('progress') || q.includes('pilot')) {
+        botResponse = "Active Pilot FIIK-PILOT-024 (Smart Waste Segregation System by GreenGrid Tech) is at 45% overall progress with 2 of 5 milestones verified across Pune Municipal Wards 12 & 14.";
+      } else if (q.includes('gem') || q.includes('procurement') || q.includes('scale')) {
+        botResponse = "Once a pilot completes all 5 milestones and receives a PREP Passport (Overall Grade >90%), other state departments and municipal corporations can inspect the verified evidence ledger and fast-track direct procurement.";
+      } else {
+        botResponse = `FIIK Assistant (${activeRole.toUpperCase()} Context): Regarding "${textToSend}", the pilot pipeline tracks this under standard 4-party governance. Check your active workspace dashboard or select one of the suggested query chips below for details.`;
+      }
 
       setMessages((prev) => [
         ...prev,
         { id: Date.now() + 1, sender: 'bot', text: botResponse }
       ]);
-    }, 400);
+    }, 350);
   };
 
   return (

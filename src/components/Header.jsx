@@ -21,9 +21,9 @@ export default function Header({ variant = 'public', showHomeLink = false, backT
       <div className="bg-[#071A3D] text-white text-xs py-1.5 px-4 border-b border-navy-900">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3 font-semibold text-[11px] opacity-95">
-            <span>GOVERNMENT OF INDIA</span>
+            <span>FIIK — PILOT INTELLIGENCE &amp; EVIDENCE INFRASTRUCTURE</span>
             <span className="text-white/40">|</span>
-            <span className="hidden sm:inline text-white/90">MINISTRY OF COMMERCE AND INDUSTRY</span>
+            <span className="hidden sm:inline text-orange-300 font-bold">PROTOTYPE FOR GOVERNMENT STARTUP PROCUREMENT · SIH 26136</span>
           </div>
           
           <div className="flex items-center gap-4 text-[11px] font-semibold">

@@ -48,7 +48,7 @@ export default function CompletedPilot() {
               <div className="max-w-2xl">
                 <div className="flex items-center gap-2.5 mb-2">
                   <span className="text-xs font-black uppercase tracking-widest text-amber-300 bg-amber-500/20 border border-amber-400/40 px-3 py-1 rounded-full">
-                    🛂 OFFICIAL DIGITAL CREDENTIAL · PORTABLE EVIDENCE
+                    🛂 DIGITAL CREDENTIAL · PORTABLE EVIDENCE PROTOCOL (PROTOTYPE)
                   </span>
                   <span className="text-xs font-bold text-emerald-400 bg-emerald-500/20 px-2.5 py-0.5 rounded-full border border-emerald-400/40">
                     ✓ Recorded in FIIK Pilot Registry (Prototype)
@@ -58,7 +58,7 @@ export default function CompletedPilot() {
                   Procurement Readiness Evidence Passport (PREP)
                 </h1>
                 <p className="text-xs sm:text-sm text-gray-300 mt-2 font-medium leading-relaxed">
-                  The verified digital passport proving real-world innovation performance. Enables instantaneous, evidence-backed procurement scaling across all government departments without duplicate trials.
+                  The verified digital passport framework proving real-world innovation performance. Designed to enable evidence-backed procurement scaling across government departments and reduce redundant trial requirements.
                 </p>
               </div>
 
@@ -163,7 +163,7 @@ export default function CompletedPilot() {
                       PORTABLE PROCUREMENT CREDENTIAL
                     </span>
                     <h3 className="text-base font-black text-white mt-1">
-                      Scale-Up Procurement via GeM Pilot Mechanism
+                      Scale-Up Procurement via GeM Pilot Mechanism (Simulated)
                     </h3>
                     <p className="text-xs text-gray-300 mt-1 leading-relaxed">
                       Completed pilot evidence removes technical ambiguity for procurement officers nationwide.

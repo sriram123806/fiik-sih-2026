@@ -126,11 +126,11 @@ export default function App() {
             }
           />
 
-          {/* Workflow Step 09: Evidence Submission (Restricted upload to Startup) */}
+          {/* Workflow Step 09: Evidence Submission (Restricted to Startup & Admin) */}
           <Route
             path="/evidence-submission"
             element={
-              <RoleGuard allowedRoles={['startup', 'department', 'evaluator', 'admin']} pageTitle="Evidence Submission">
+              <RoleGuard allowedRoles={['startup', 'admin']} pageTitle="Evidence Submission">
                 <EvidenceSubmission />
               </RoleGuard>
             }
@@ -138,17 +138,17 @@ export default function App() {
           <Route
             path="/startup/evidence"
             element={
-              <RoleGuard allowedRoles={['startup', 'department', 'evaluator', 'admin']} pageTitle="Evidence Submission">
+              <RoleGuard allowedRoles={['startup', 'admin']} pageTitle="Evidence Submission">
                 <EvidenceSubmission />
               </RoleGuard>
             }
           />
 
-          {/* Workflow Step 10: Evidence / Field Evaluation */}
+          {/* Workflow Step 10: Evidence / Field Evaluation (Restricted to Evaluator, Department & Admin) */}
           <Route
             path="/field-evaluation"
             element={
-              <RoleGuard allowedRoles={['department', 'evaluator', 'admin', 'startup']} pageTitle="Field Evaluation">
+              <RoleGuard allowedRoles={['evaluator', 'department', 'admin']} pageTitle="Field Evaluation">
                 <FieldEvaluation />
               </RoleGuard>
             }
@@ -156,7 +156,7 @@ export default function App() {
           <Route
             path="/startup/evaluation"
             element={
-              <RoleGuard allowedRoles={['department', 'evaluator', 'admin', 'startup']} pageTitle="Field Evaluation">
+              <RoleGuard allowedRoles={['evaluator', 'department', 'admin']} pageTitle="Field Evaluation">
                 <FieldEvaluation />
               </RoleGuard>
             }
