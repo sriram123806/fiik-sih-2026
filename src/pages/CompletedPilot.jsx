@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import html2pdf from 'html2pdf.js';
 import Header from '../components/Header';
 import Sidebar from '../components/Sidebar';
 import PilotSummaryBar from '../components/PilotSummaryBar';
@@ -27,9 +28,34 @@ const TABS = [
 
 export default function CompletedPilot() {
   const [tab, setTab] = useState(TABS[0]);
+  const [isDownloading, setIsDownloading] = useState(false);
   const { pilot } = usePilot();
   const { role } = useAuth();
   const theme = useRoleTheme(role);
+
+  const handleDownloadPDF = async () => {
+    const element = document.getElementById('prep-document-card');
+    if (!element) return;
+
+    const prepId = prepMeta?.pilotId || pilot?.id || 'FIIK-PILOT-024';
+    setIsDownloading(true);
+
+    try {
+      const opt = {
+        margin: 0.2,
+        filename: `FIIK-PREP-${prepId}.pdf`,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2, useCORS: true, logging: false },
+        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' },
+      };
+
+      await html2pdf().set(opt).from(element).save();
+    } catch (err) {
+      console.error('PDF Generation Error:', err);
+    } finally {
+      setIsDownloading(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-[#F4F6F8] flex flex-col font-sans">
@@ -127,6 +153,7 @@ export default function CompletedPilot() {
               {/* Passport Visual Component */}
               <div className="lg:col-span-6 flex flex-col items-center gap-4">
                 <PrepDocument
+                  id="prep-document-card"
                   pilotId={prepMeta?.pilotId || 'FIIK-PILOT-024'}
                   issueDate={prepMeta?.issueDate || '20 Feb 2026'}
                   startup={pilot?.startup || 'GreenGrid Technologies Pvt. Ltd.'}
@@ -136,10 +163,11 @@ export default function CompletedPilot() {
 
                 <div className="w-full flex gap-3">
                   <button
-                    onClick={() => alert('Simulated PDF Download: FIIK-PILOT-024-PREP.pdf generated with digital signature!')}
-                    className="flex-1 bg-[#F36C21] hover:bg-[#D94F0B] text-white text-xs font-black py-3 rounded-xl transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer"
+                    onClick={handleDownloadPDF}
+                    disabled={isDownloading}
+                    className="flex-1 bg-[#F36C21] hover:bg-[#D94F0B] disabled:opacity-50 text-white text-xs font-black py-3 rounded-xl transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer"
                   >
-                    <span>📥 Download Verified PREP (PDF)</span>
+                    <span>{isDownloading ? '⏳ Generating Real PDF...' : '📥 Download Verified PREP (PDF)'}</span>
                   </button>
                   <button
                     onClick={() => alert('PREP Verification Link copied: https://fiik.gov.in/verify/PREP-MH-2026-FIIK-024')}

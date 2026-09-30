@@ -8,9 +8,11 @@ export default function PrepDocument({
   department = 'Department of Urban Development, Maharashtra',
   score = '94.8% A+ (Field Proven)',
   compact = false,
+  id,
 }) {
   return (
     <div
+      id={id}
       className={`bg-white border-4 border-[#071A3D] rounded-2xl shadow-2xl overflow-hidden relative font-sans text-left ${
         compact ? 'max-w-md w-full' : 'max-w-2xl w-full'
       }`}
